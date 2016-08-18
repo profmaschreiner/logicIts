@@ -18,7 +18,7 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
             //}
         } catch (ParseException e) {
             lista.clear();
-            lista.add("Errro");
+            lista.add("Erro");
             lista.add(e.getMessage());
             System.out.println(e.getMessage());
             System.out.println("Erro na analize!!!");

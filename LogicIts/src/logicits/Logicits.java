@@ -5,6 +5,7 @@
  */
 package logicits;
 
+import java.util.Iterator;
 import logicits.javaccList.Sintatico;
 
 /**
@@ -13,6 +14,12 @@ import logicits.javaccList.Sintatico;
  */
 public class Logicits {
     public static void main(String[] args) {
-        Sintatico s = new Sintatico("p < q");
+        Sintatico s = new Sintatico("p -> (q | s)");
+        if (!"Erro".equals(s.lista.get(0))) {
+            for (Iterator token = s.lista.iterator(); token.hasNext();) {
+                Object next = token.next();
+                System.out.println(next.toString());
+            }
+        }
     }
 }

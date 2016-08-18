@@ -41,7 +41,7 @@ public class Sintatico {
 
         } catch (ParseException e) {
             this.lista.clear();
-            this.lista.add("Errro");
+            this.lista.add("Erro");
             this.lista.add(e.getMessage());
             System.out.println(e.getMessage());
             System.out.println("Erro na analize!!!");
