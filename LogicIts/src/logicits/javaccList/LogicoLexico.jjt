@@ -1,0 +1,109 @@
+options{
+  IGNORE_CASE = false;
+  MULTI=true;
+  VISITOR = true;
+}
+
+PARSER_BEGIN(LogicoLexico)
+    import java.io.*;
+    import java.util.*;
+public class LogicoLexico{        
+    public static void main(String[] args) throws ParseException{
+        List<String> lista = new ArrayList();
+        try{
+            LogicoLexico analizador = new LogicoLexico(System.in);                    
+            lista = analizador.program();
+            //for(int i=0;i<lista.size();i++){
+                //  System.out.println(lista.get(i));  
+            //}
+        }catch(ParseException e){
+            lista.clear();
+            lista.add("Errro");
+            lista.add(e.getMessage());
+            System.out.println(e.getMessage());
+            System.out.println("Erro na analize!!!");
+        }
+        for(int i=0;i<lista.size();i++){
+            System.out.println(lista.get(i));  
+        }            
+    }			
+}
+PARSER_END(LogicoLexico)
+
+TOKEN:{
+    <ABREPARENT: "(">{System.out.println("ABRE PARENTESES -> "+image);}
+    |<FECHAPARENT: ")">{System.out.println("FECHA PARENTESES -> "+image);}
+}
+
+TOKEN:{
+    <LOGO: "|-">{System.out.println("LOGO -> "+image);}
+}
+
+TOKEN:{
+    <E: "&">{System.out.println("E -> "+image);}
+    |<OU: "|">{System.out.println("OU -> "+image);}
+}
+
+TOKEN:{
+    <NEGACAO: "~">{System.out.println("NEGACAO -> "+image);}
+}
+
+TOKEN:{
+    <VARIAVEL: ["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9","_"])*>{System.out.println("VARIAVEL -> "+image);}
+}
+
+TOKEN:{
+    <BIIMPLICA: "<->">{System.out.println("BI IMPLICA -> "+image);}
+}
+
+TOKEN:{
+    <MAIORQUE: ">">{System.out.println("MAIOR QUE -> "+image);}
+    |<MENORQUE: "<">{System.out.println("MENOR QUE -> "+image);}
+}
+
+TOKEN:{
+    <IMPLICA: "->">{System.out.println("IMPLICA -> "+image);}
+    |<EHIMPLICADO: "<-">{System.out.println("EH IMPLICADO -> "+image);}
+}
+
+
+SKIP:{
+    " "|"\r\n"|"\n"|"\t"
+}
+
+
+List<String> program() : {List<String> listaDeTokens = new ArrayList<String>();}
+{
+  Expressao(listaDeTokens) <EOF> {return listaDeTokens;}
+}
+
+void Expressao(List<String> listaDeTokens) #void : {}
+{
+   Termo(listaDeTokens)[ComplementoDeExpressao(listaDeTokens)]
+   
+}
+
+void ComplementoDeExpressao(List<String> listaDeTokens) #void : {}
+{
+    Operador(listaDeTokens)Expressao(listaDeTokens)
+}
+
+void Termo(List<String> listaDeTokens) #void : {Token t1,t2;}
+{
+    ([t1 = <NEGACAO>{listaDeTokens.add(t1.image);}]t2 = <VARIAVEL>{listaDeTokens.add(t2.image);}
+    |t1 = <ABREPARENT>{listaDeTokens.add(t1.image);}Expressao(listaDeTokens)t2 = <FECHAPARENT>{listaDeTokens.add(t2.image);}
+    )
+}
+
+void Operador(List<String> listaDeTokens) #void : {Token t;}
+{
+    (t = <LOGO>{listaDeTokens.add(t.image);}
+    |t = <E>{listaDeTokens.add(t.image);}
+    |t = <OU>{listaDeTokens.add(t.image);}
+    |t = <BIIMPLICA>{listaDeTokens.add(t.image);}
+    |t = <IMPLICA>{listaDeTokens.add(t.image);}
+    |t = <EHIMPLICADO>{listaDeTokens.add(t.image);}
+    |t = <MAIORQUE>{listaDeTokens.add(t.image);}
+    |t = <MENORQUE>{listaDeTokens.add(t.image);}
+    )
+}
