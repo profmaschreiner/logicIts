@@ -18,7 +18,7 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
             //}
         } catch (ParseException e) {
             lista.clear();
-            lista.add("Erro");
+            lista.add("Errro");
             lista.add(e.getMessage());
             System.out.println(e.getMessage());
             System.out.println("Erro na analize!!!");
@@ -80,14 +80,10 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
     static final public void Expressao(List<String> listaDeTokens) throws ParseException {
         Termo(listaDeTokens);
         switch ((jj_ntk == -1) ? jj_ntk_f() : jj_ntk) {
-            case LOGO:
             case E:
             case OU:
             case BIIMPLICA:
-            case MAIORQUE:
-            case MENORQUE:
-            case IMPLICA:
-            case EHIMPLICADO: {
+            case IMPLICA: {
                 ComplementoDeExpressao(listaDeTokens);
                 break;
             }
@@ -103,30 +99,27 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
     }
 
     static final public void Termo(List<String> listaDeTokens) throws ParseException {
+        switch ((jj_ntk == -1) ? jj_ntk_f() : jj_ntk) {
+            case NEGACAO: {
+                Negacao(listaDeTokens);
+                break;
+            }
+            default:
+                jj_la1[1] = jj_gen;
+                ;
+        }
+        TermoSimples(listaDeTokens);
+    }
+
+    static final public void TermoSimples(List<String> listaDeTokens) throws ParseException {
         Token t1, t2;
         switch ((jj_ntk == -1) ? jj_ntk_f() : jj_ntk) {
-            case NEGACAO:
             case VARIAVEL: {
-                switch ((jj_ntk == -1) ? jj_ntk_f() : jj_ntk) {
-                    case NEGACAO: {
-                        t1 = jj_consume_token(NEGACAO);
-                        listaDeTokens.add(t1.image);
-                        break;
-                    }
-                    default:
-                        jj_la1[1] = jj_gen;
-                        ;
-                }
-                t2 = jj_consume_token(VARIAVEL);
-                listaDeTokens.add(t2.image);
+                VariavelSimples(listaDeTokens);
                 break;
             }
             case ABREPARENT: {
-                t1 = jj_consume_token(ABREPARENT);
-                listaDeTokens.add(t1.image);
-                Expressao(listaDeTokens);
-                t2 = jj_consume_token(FECHAPARENT);
-                listaDeTokens.add(t2.image);
+                ExpEntreParent(listaDeTokens);
                 break;
             }
             default:
@@ -136,14 +129,30 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
         }
     }
 
+    static final public void ExpEntreParent(List<String> listaDeTokens) throws ParseException {
+        Token t1, t2;
+        t1 = jj_consume_token(ABREPARENT);
+        listaDeTokens.add(t1.image);
+        Expressao(listaDeTokens);
+        t2 = jj_consume_token(FECHAPARENT);
+        listaDeTokens.add(t2.image);
+    }
+
+    static final public void VariavelSimples(List<String> listaDeTokens) throws ParseException {
+        Token t1;
+        t1 = jj_consume_token(VARIAVEL);
+        listaDeTokens.add(t1.image);
+    }
+
+    static final public void Negacao(List<String> listaDeTokens) throws ParseException {
+        Token t1;
+        t1 = jj_consume_token(NEGACAO);
+        listaDeTokens.add(t1.image);
+    }
+
     static final public void Operador(List<String> listaDeTokens) throws ParseException {
         Token t;
         switch ((jj_ntk == -1) ? jj_ntk_f() : jj_ntk) {
-            case LOGO: {
-                t = jj_consume_token(LOGO);
-                listaDeTokens.add(t.image);
-                break;
-            }
             case E: {
                 t = jj_consume_token(E);
                 listaDeTokens.add(t.image);
@@ -161,21 +170,6 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
             }
             case IMPLICA: {
                 t = jj_consume_token(IMPLICA);
-                listaDeTokens.add(t.image);
-                break;
-            }
-            case EHIMPLICADO: {
-                t = jj_consume_token(EHIMPLICADO);
-                listaDeTokens.add(t.image);
-                break;
-            }
-            case MAIORQUE: {
-                t = jj_consume_token(MAIORQUE);
-                listaDeTokens.add(t.image);
-                break;
-            }
-            case MENORQUE: {
-                t = jj_consume_token(MENORQUE);
                 listaDeTokens.add(t.image);
                 break;
             }
@@ -210,7 +204,7 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
     }
 
     private static void jj_la1_init_0() {
-        jj_la1_0 = new int[]{0x1f38, 0x40, 0xc2, 0x1f38,};
+        jj_la1_0 = new int[]{0x198, 0x20, 0x42, 0x198,};
     }
 
     /**
@@ -404,7 +398,7 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
      */
     static public ParseException generateParseException() {
         jj_expentries.clear();
-        boolean[] la1tokens = new boolean[17];
+        boolean[] la1tokens = new boolean[13];
         if (jj_kind >= 0) {
             la1tokens[jj_kind] = true;
             jj_kind = -1;
@@ -418,7 +412,7 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
                 }
             }
         }
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 13; i++) {
             if (la1tokens[i]) {
                 jj_expentry = new int[1];
                 jj_expentry[0] = i;

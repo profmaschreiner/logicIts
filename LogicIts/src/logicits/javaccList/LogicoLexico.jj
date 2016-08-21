@@ -6,8 +6,8 @@
 }
 
 PARSER_BEGIN(LogicoLexico)
-import java.io.*;
-import java.util.*;
+    import java.io.*;
+    import java.util.*;
 public class LogicoLexico/*@bgen(jjtree)*/implements LogicoLexicoTreeConstants/*@egen*/{/*@bgen(jjtree)*/
   protected static JJTLogicoLexicoState jjtree = new JJTLogicoLexicoState();
 
@@ -40,10 +40,6 @@ TOKEN:{
 }
 
 TOKEN:{
-    <LOGO: "|-">{System.out.println("LOGO -> "+image);}
-}
-
-TOKEN:{
     <E: "&">{System.out.println("E -> "+image);}
     |<OU: "|">{System.out.println("OU -> "+image);}
 }
@@ -60,14 +56,9 @@ TOKEN:{
     <BIIMPLICA: "<->">{System.out.println("BI IMPLICA -> "+image);}
 }
 
-TOKEN:{
-    <MAIORQUE: ">">{System.out.println("MAIOR QUE -> "+image);}
-    |<MENORQUE: "<">{System.out.println("MENOR QUE -> "+image);}
-}
 
 TOKEN:{
     <IMPLICA: "->">{System.out.println("IMPLICA -> "+image);}
-    |<EHIMPLICADO: "<-">{System.out.println("EH IMPLICADO -> "+image);}
 }
 
 
@@ -115,7 +106,6 @@ List<String> program() : {/*@bgen(jjtree) program */
 void Expressao(List<String> listaDeTokens)       : {}
 {
    Termo(listaDeTokens)[ComplementoDeExpressao(listaDeTokens)]
-   
 }
 
 void ComplementoDeExpressao(List<String> listaDeTokens)       : {}
@@ -123,22 +113,38 @@ void ComplementoDeExpressao(List<String> listaDeTokens)       : {}
     Operador(listaDeTokens)Expressao(listaDeTokens)
 }
 
-void Termo(List<String> listaDeTokens)       : {Token t1,t2;}
+void Termo(List<String> listaDeTokens)       : {}
 {
-    ([t1 = <NEGACAO>{listaDeTokens.add(t1.image);}]t2 = <VARIAVEL>{listaDeTokens.add(t2.image);}
-    |t1 = <ABREPARENT>{listaDeTokens.add(t1.image);}Expressao(listaDeTokens)t2 = <FECHAPARENT>{listaDeTokens.add(t2.image);}
+    [Negacao(listaDeTokens)]TermoSimples(listaDeTokens)
+}
+
+void TermoSimples(List<String> listaDeTokens)       : {Token t1,t2;}
+{
+    (VariavelSimples(listaDeTokens)
+    |ExpEntreParent(listaDeTokens)
     )
+}
+
+void ExpEntreParent(List<String> listaDeTokens)       : {Token t1,t2;}
+{
+    t1 = <ABREPARENT>{listaDeTokens.add(t1.image);}Expressao(listaDeTokens)t2 = <FECHAPARENT>{listaDeTokens.add(t2.image);} 
+}
+
+void VariavelSimples(List<String> listaDeTokens)       : {Token t1;}
+{
+    t1 = <VARIAVEL>{listaDeTokens.add(t1.image);} 
+}
+
+void Negacao(List<String> listaDeTokens)       : {Token t1;}
+{
+    t1 = <NEGACAO>{listaDeTokens.add(t1.image);}
 }
 
 void Operador(List<String> listaDeTokens)       : {Token t;}
 {
-    (t = <LOGO>{listaDeTokens.add(t.image);}
-    |t = <E>{listaDeTokens.add(t.image);}
+    (t = <E>{listaDeTokens.add(t.image);}
     |t = <OU>{listaDeTokens.add(t.image);}
     |t = <BIIMPLICA>{listaDeTokens.add(t.image);}
     |t = <IMPLICA>{listaDeTokens.add(t.image);}
-    |t = <EHIMPLICADO>{listaDeTokens.add(t.image);}
-    |t = <MAIORQUE>{listaDeTokens.add(t.image);}
-    |t = <MENORQUE>{listaDeTokens.add(t.image);}
     )
 }
