@@ -5,7 +5,7 @@
  */
 package logicits;
 
-import arvore.Arvore;
+import logicits.arvoreLex.Arvore;
 import java.util.Iterator;
 import logicits.javaccList.Sintatico;
 
