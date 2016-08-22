@@ -18,55 +18,140 @@ public class Arvore {
     Arvore dir;
     Arvore esq;
 
-    public Arvore(List<String> exp) {
-        this.insere(exp);
+    public Arvore(List<String> exp, boolean negacao) {
+        this.negacao = negacao;
+        this.insere(exp,negacao);
     }
 
-    private void insere(List<String> exp) {
-        expressao(exp);
+    public Arvore(String info, boolean negacao) {
+        this.negacao = negacao;
+        this.info = info;
     }
 
-    private void expressao(List<String> exp) {
+    private void insere(List<String> exp, boolean negacao) {
+        expressao(exp, negacao);
+    }
+
+    private void expressao(List<String> exp, boolean negacao) {
         this.termo(exp);
-        if (ehOper(exp.get(0))) {
+        if (exp.size() > 0 && ehOper(exp.get(0))) {
+            this.negacao = negacao;
             this.info = exp.get(0);
             exp.remove(0);
-            this.expressao(exp);
+            dir = new Arvore(exp, false);
         }
     }
 
     private void termo(List<String> exp) {
+        boolean negLocal = false;
+        if (exp.size() > 0) {
+            negLocal = ehNegacao(exp.get(0));
+        }
+        if (negLocal) {
+            exp.remove(exp.get(0));
+        }
         if ("(".equals(exp.get(0))) {
             exp.remove(0);
-            this.expressao(exp);
+            if (exp.size() != (exp.indexOf(")")+1) ) {
+                this.esq = new Arvore(exp, negLocal);
+            }else{
+                this.expressao(exp, negLocal);
+            }
             exp.remove(0);
+
         } else {
-            this.variavel(exp);
+            this.variavel(exp, negLocal);
         }
     }
 
-    private void variavel(List<String> exp) {
-        boolean negLocal = ehNegacao(exp.get(0));
-        if (negLocal) {
-            exp.remove(exp.get(0));
-        }if (exp.size() < 2 && ")".equals(exp.get(1))) {
-            esq = new Arvore(exp);
-            esq.negacao = negLocal;
-        }else{
-            dir = new Arvore(exp);
-            dir.negacao = negLocal;
+    private void variavel(List<String> exp, boolean negacao) {
+        if (exp.size() > 1 && ehOper(exp.get(1))) {
+            esq = new Arvore(exp.get(0), negacao);
+            exp.remove(0);
+        } else if (exp.size() > 0) {
+            this.negacao = negacao;
+            this.info = exp.get(0);
+            exp.remove(0);
         }
-        
     }
 
     public boolean ehOper(String token) {
-        return "|-".equals(token) || "&".equals(token) || "|".equals(token)
-                || "<->".equals(token) || "->".equals(token) || "<-".equals(token)
-                || ">".equals(token) || "<".equals(token);
+        if ("&".equals(token) || "|".equals(token)
+                || "<->".equals(token) || "->".equals(token)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean ehNegacao(String token) {
-        return "~".equals(token);
+        if ("~".equals(token)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void imprime() {
+        System.out.print("\nPre Ordem: ");
+        this.percorrerPreOrder();
+        System.out.print("\nIn Ordem: ");
+        this.percorrerInOrder();
+        System.out.print("\nPos Ordem: ");
+        this.percorrerPosOrder();
+        System.out.println("");
+
+    }
+
+    public void percorrerInOrder() {
+        if (this.info == null) {
+            return;
+        }
+
+        if (this.esq != null) {
+            this.esq.percorrerInOrder();
+        }
+        if (this.negacao) {
+            System.out.print("~");
+        }
+        System.out.print(this.info);
+        if (this.dir != null) {
+            this.dir.percorrerInOrder();
+        }
+    }
+
+    public void percorrerPreOrder() {
+        if (this.info == null) {
+            return;
+        }
+        if (this.negacao) {
+            System.out.print("~");
+        }
+        System.out.print(this.info);
+        if (this.esq != null) {
+            this.esq.percorrerPreOrder();
+        }
+
+        if (this.dir != null) {
+            this.dir.percorrerPreOrder();
+        }
+    }
+
+    public void percorrerPosOrder() {
+        if (this.info == null) {
+            return;
+        }
+
+        if (this.esq != null) {
+            this.esq.percorrerPosOrder();
+        }
+
+        if (this.dir != null) {
+            this.dir.percorrerPosOrder();
+        }
+
+        if (this.negacao) {
+            System.out.print("~");
+        }
+        System.out.print(this.info);
     }
 
 }
