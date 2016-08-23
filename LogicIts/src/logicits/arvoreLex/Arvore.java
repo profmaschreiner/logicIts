@@ -20,7 +20,7 @@ public class Arvore {
 
     public Arvore(List<String> exp, boolean negacao) {
         this.negacao = negacao;
-        this.insere(exp,negacao);
+        this.insere(exp, negacao);
     }
 
     public Arvore(String info, boolean negacao) {
@@ -47,14 +47,14 @@ public class Arvore {
         if (exp.size() > 0) {
             negLocal = ehNegacao(exp.get(0));
         }
-        if (negLocal) {
+        if (exp.get(0).contains("~")) {
             exp.remove(exp.get(0));
         }
         if ("(".equals(exp.get(0))) {
             exp.remove(0);
-            if (exp.size() != (exp.indexOf(")")+1) ) {
+            if (exp.size() != (exp.indexOf(")") + 1)) {
                 this.esq = new Arvore(exp, negLocal);
-            }else{
+            } else {
                 this.expressao(exp, negLocal);
             }
             exp.remove(0);
@@ -84,10 +84,19 @@ public class Arvore {
     }
 
     public boolean ehNegacao(String token) {
-        if ("~".equals(token)) {
-            return true;
+        boolean neg = false;
+        
+        while (!token.isEmpty() && token.indexOf("~") == 0) {
+            System.out.println("negou");
+            token = token.substring(1, token.length());
+            neg = !neg;
         }
-        return false;
+        return neg;
+
+//        if ("~".equals(token)) {
+//            return true;
+//        }
+//        return false;
     }
 
     public void imprime() {

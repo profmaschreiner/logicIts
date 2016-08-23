@@ -41,7 +41,8 @@ TOKEN:{
 }
 
 TOKEN:{
-    <NEGACAO: "~">{System.out.println("NEGACAO -> "+image);}
+    <NEGACAO: ["~"](["~"])* >{System.out.println("NEGACAO -> "+image);}
+    
 }
 
 TOKEN:{
@@ -103,6 +104,7 @@ void VariavelSimples(List<String> listaDeTokens) #void : {Token t1;}
 void Negacao(List<String> listaDeTokens) #void : {Token t1;}
 {
     t1 = <NEGACAO>{listaDeTokens.add(t1.image);}
+    
 }
 
 void Operador(List<String> listaDeTokens) #void : {Token t;}

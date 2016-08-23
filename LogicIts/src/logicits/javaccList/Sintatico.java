@@ -39,7 +39,6 @@ public class Sintatico {
             System.out.println(e.getMessage());
             System.out.println("Erro na analize!!!");
         }
-
     }
 
 }
