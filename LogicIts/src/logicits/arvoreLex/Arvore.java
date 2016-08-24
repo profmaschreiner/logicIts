@@ -13,10 +13,10 @@ import java.util.List;
  */
 public class Arvore {
 
-    boolean negacao = false;
-    String info;
-    Arvore dir;
-    Arvore esq;
+    private boolean negacao = false;
+    private String info;
+    private Arvore dir;
+    private Arvore esq;
 
     public Arvore(List<String> exp, boolean negacao) {
         this.negacao = negacao;
@@ -28,13 +28,21 @@ public class Arvore {
         this.info = info;
     }
 
+    private Arvore(Arvore arvore) {
+        this.dir = arvore.getDir();
+        this.esq = arvore.getEsq();
+        this.info = arvore.getInfo();
+        this.negacao = arvore.isNegacao();
+    }
+
     private void insere(List<String> exp, boolean negacao) {
         expressao(exp, negacao);
     }
 
     private void expressao(List<String> exp, boolean negacao) {
-        this.termo(exp);
+        this.termo(exp, negacao);
         if (exp.size() > 0 && ehOper(exp.get(0))) {
+            this.esq = new Arvore(this);
             this.negacao = negacao;
             this.info = exp.get(0);
             exp.remove(0);
@@ -42,40 +50,32 @@ public class Arvore {
         }
     }
 
-    private void termo(List<String> exp) {
-        boolean negLocal = false;
+    private void termo(List<String> exp, boolean negacao) {
+        boolean negLocal = negacao;
         if (exp.size() > 0) {
-            negLocal = ehNegacao(exp.get(0));
-        }
-        if (exp.get(0).contains("~")) {
-            exp.remove(exp.get(0));
-        }
-        if ("(".equals(exp.get(0))) {
-            exp.remove(0);
-            if (exp.size() != (exp.indexOf(")") + 1)) {
-                this.esq = new Arvore(exp, negLocal);
-            } else {
-                this.expressao(exp, negLocal);
+            if (exp.get(0).contains("~")) {
+                if (ehNegacao(exp.get(0))) {
+                    negLocal = !negLocal;
+                }
+                exp.remove(exp.get(0));
             }
-            exp.remove(0);
-
-        } else {
-            this.variavel(exp, negLocal);
+            if ("(".equals(exp.get(0))) {
+                exp.remove(0);
+                this.expressao(exp, negLocal);
+                exp.remove(0);
+            } else {
+                this.variavel(exp, negLocal);
+            }
         }
     }
 
     private void variavel(List<String> exp, boolean negacao) {
-        if (exp.size() > 1 && ehOper(exp.get(1))) {
-            esq = new Arvore(exp.get(0), negacao);
-            exp.remove(0);
-        } else if (exp.size() > 0) {
-            this.negacao = negacao;
-            this.info = exp.get(0);
-            exp.remove(0);
-        }
+        this.negacao = negacao;
+        this.info = exp.get(0);
+        exp.remove(0);
     }
 
-    public boolean ehOper(String token) {
+    private boolean ehOper(String token) {
         if ("&".equals(token) || "|".equals(token)
                 || "<->".equals(token) || "->".equals(token)) {
             return true;
@@ -83,20 +83,30 @@ public class Arvore {
         return false;
     }
 
-    public boolean ehNegacao(String token) {
+    private boolean ehNegacao(String token) {
         boolean neg = false;
-        
         while (!token.isEmpty() && token.indexOf("~") == 0) {
             System.out.println("negou");
             token = token.substring(1, token.length());
             neg = !neg;
         }
         return neg;
+    }
 
-//        if ("~".equals(token)) {
-//            return true;
-//        }
-//        return false;
+    public boolean isNegacao() {
+        return negacao;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public Arvore getDir() {
+        return dir;
+    }
+
+    public Arvore getEsq() {
+        return esq;
     }
 
     public void imprime() {

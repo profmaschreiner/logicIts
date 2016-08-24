@@ -24,7 +24,7 @@ public class Logicits {
         //Sintatico s = new Sintatico("q | p");
         //Sintatico s = new Sintatico("p & (q | r)");
         //Sintatico s = new Sintatico("p | (q & r)");
-        //Sintatico s = new Sintatico("(p & q) | (p & r)");
+        Sintatico s = new Sintatico("(p & q) | (p & r)");
         //Sintatico s = new Sintatico("~~p");
         //Sintatico s = new Sintatico("~(p & q)");
         //Sintatico s = new Sintatico("~p | ~q");
@@ -32,12 +32,13 @@ public class Logicits {
         //Sintatico s = new Sintatico("~p & ~q");
         //Sintatico s = new Sintatico("p -> q");
         //Sintatico s = new Sintatico("~p | q");
-        //Sintatico s = new Sintatico("(p <-> q");
+        //Sintatico s = new Sintatico("p <-> q");
         //Sintatico s = new Sintatico("(p -> q) & (q -> p)");
         //Sintatico s = new Sintatico("(p & q) | (~p & ~q)");
         //Sintatico s = new Sintatico("~q -> ~p");
-        Sintatico s = new Sintatico("(p & q) -> r");
+        //Sintatico s = new Sintatico("((p & q) -> r)");
         //Sintatico s = new Sintatico("p -> (q -> r)");
+        //Sintatico s = new Sintatico("~(~~(~p))");
         
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
