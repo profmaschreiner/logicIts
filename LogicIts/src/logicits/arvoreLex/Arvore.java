@@ -28,11 +28,33 @@ public class Arvore {
         this.info = info;
     }
 
-    private Arvore(Arvore arvore) {
+    public Arvore(Arvore arvore) {
         this.dir = arvore.getDir();
         this.esq = arvore.getEsq();
         this.info = arvore.getInfo();
         this.negacao = arvore.isNegacao();
+    }
+
+    public void setDir(Arvore dir) {
+        this.dir = dir;
+    }
+
+    public void setEsq(Arvore esq) {
+        this.esq = esq;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public boolean equals(Arvore a) {
+        if (this.getInfo() == a.getInfo() 
+                && this.getDir().equals(a.getDir()) 
+                && this.getEsq().equals(a.getEsq())) {
+            return true;
+        }
+        return false;
+
     }
 
     private void insere(List<String> exp, boolean negacao) {
@@ -78,6 +100,14 @@ public class Arvore {
     private boolean ehOper(String token) {
         if ("&".equals(token) || "|".equals(token)
                 || "<->".equals(token) || "->".equals(token)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean raizEhOper() {
+        if ("&".equals(this.info) || "|".equals(this.info)
+                || "<->".equals(this.info) || "->".equals(this.info)) {
             return true;
         }
         return false;
