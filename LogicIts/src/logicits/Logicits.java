@@ -7,6 +7,7 @@ package logicits;
 
 import logicits.arvoreLex.Arvore;
 import java.util.Iterator;
+import logicits.equivalencia.GeradorDeEquivalencia;
 import logicits.javaccList.Sintatico;
 
 /**
@@ -22,10 +23,16 @@ public class Logicits {
         //Sintatico s = new Sintatico("q & p");
         //Sintatico s = new Sintatico("p | q");
         //Sintatico s = new Sintatico("q | p");
+        
+        //Sintatico s = new Sintatico("p & (q & r)");
+        //Sintatico s = new Sintatico("p | (q | r)");
+        //Sintatico s = new Sintatico("(p & q) & r");
+        Sintatico s = new Sintatico("(p | q )| r");
+        
         //Sintatico s = new Sintatico("p & (q | r)");
         //Sintatico s = new Sintatico("p | (q & r)");
-        Sintatico s = new Sintatico("(p & q) | (p & r)");
-        //Sintatico s = new Sintatico("~~p");
+        //Sintatico s = new Sintatico("(p & q) | (p & r)");
+        //Sintatico s = new Sintatico("~p");
         //Sintatico s = new Sintatico("~(p & q)");
         //Sintatico s = new Sintatico("~p | ~q");
         //Sintatico s = new Sintatico("~(p | q)");
@@ -49,5 +56,15 @@ public class Logicits {
         
         Arvore a = new Arvore(s.lista,false);        
         a.imprime();
+        
+        System.out.println("");        
+        
+        GeradorDeEquivalencia ge = new GeradorDeEquivalencia(s.lista, a);       
+        
+        ge.getLista().stream().forEach((equivalencia) -> {
+            equivalencia.imprime();
+        });
+        
+        
     }
 }

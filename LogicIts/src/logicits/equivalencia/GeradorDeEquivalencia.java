@@ -36,6 +36,20 @@ public class GeradorDeEquivalencia {
         this.addEq(e);
     }
 
+    public List<Equivalencia> getLista() {
+        return lista;
+    }
+
+    public static List<String> getExpOriginal() {
+        return expOriginal;
+    }
+
+    public static Arvore getArvoreOriginal() {
+        return arvoreOriginal;
+    }
+
+    
+    
     private void addEq(Equivalencia e) {
         lista.add(e);
     }
@@ -76,11 +90,11 @@ public class GeradorDeEquivalencia {
     private void com() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.COM;             //define a regra a ser utilizada por este metodo
-        if ("&".equals(orig.getInfo()) || "|".equals(orig.getInfo())) { // se raiz da arvore é AND ou OR
+        if (("&".equals(orig.getInfo()) || "|".equals(orig.getInfo())) // se raiz da arvore é AND ou OR
+                && !orig.getDir().equals(orig.getEsq())) { // e ela nao é espelhada
             Arvore nova = new Arvore(orig);
-            Arvore aux = new Arvore(nova.getDir());  //realiza a comutação invertendo os filhos
-            nova.setDir(nova.getEsq());
-            nova.setEsq(aux);
+            nova.setDir(orig.getEsq());//realiza a comutação invertendo os filhos de lado
+            nova.setEsq(orig.getDir());
             gerar(nova, reg);
         }
 
@@ -178,17 +192,20 @@ public class GeradorDeEquivalencia {
         if ("&".equals(orig.getInfo())) {                  //se raiz é AND                                    
             if ("|".equals(orig.getDir().getInfo()) // dir OR
                     && "|".equals(orig.getEsq().getInfo())) {      // esq é OR
+                if (orig.getDir().getDir().equals(orig.getEsq().getDir())) {//DIR.DIR = ESQ.DIR
 
-            } else if ("|".equals(orig.getEsq().getInfo()) // esq OR
-                    && "|".equals(orig.getDir().getInfo())) {       // dir é OR
+                } else if (orig.getDir().getDir().equals(orig.getEsq().getEsq())) {//DIR.DIR = ESQ.ESQ
 
+                }
+                if (orig.getDir().getEsq().equals(orig.getEsq().getDir())) {//ESQ.DIR = ESQ.DIR
+
+                } else if (orig.getDir().getEsq().equals(orig.getEsq().getEsq())) {//ESQ.DIR = ESQ.ESQ
+
+                }
             }
         } else if ("|".equals(orig.getInfo())) {             //analogo ao AND/OR porem com OR/AND
             if ("&".equals(orig.getDir().getInfo())
-                    && "&".equals(orig.getDir().getInfo())) {
-
-            } else if ("&".equals(orig.getEsq().getInfo())
-                    && "&".equals(orig.getDir().getInfo())) {
+                    && "&".equals(orig.getEsq().getInfo())) {
 
             }
         }

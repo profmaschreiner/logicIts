@@ -44,4 +44,19 @@ public class Equivalencia {
         return regra;
     }
 
+    @Override
+    public String toString() {
+        String equivalencia = "Expressão original -> " + this.arvoreOriginal
+                + " = Equivalência da regra " + this.regra + "-> " + this.arvoreEqui;
+
+        return equivalencia; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void imprime() {
+        System.out.println(this.toString());
+//        System.out.print(this.regra);
+//        this.getArvoreEqui().imprime();
+//        System.out.println("");
+    }
+
 }
