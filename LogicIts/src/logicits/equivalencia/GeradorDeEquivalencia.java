@@ -48,8 +48,6 @@ public class GeradorDeEquivalencia {
         return arvoreOriginal;
     }
 
-    
-    
     private void addEq(Equivalencia e) {
         lista.add(e);
     }
@@ -193,23 +191,71 @@ public class GeradorDeEquivalencia {
             if ("|".equals(orig.getDir().getInfo()) // dir OR
                     && "|".equals(orig.getEsq().getInfo())) {      // esq é OR
                 if (orig.getDir().getDir().equals(orig.getEsq().getDir())) {//DIR.DIR = ESQ.DIR
-
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("|");
+                    nova.getDir().setInfo("&");
+                    nova.setEsq(orig.getDir().getDir());
+                    nova.getDir().setDir(orig.getEsq().getEsq());
+                    gerar(nova, reg);
                 } else if (orig.getDir().getDir().equals(orig.getEsq().getEsq())) {//DIR.DIR = ESQ.ESQ
-
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("|");
+                    nova.getDir().setInfo("&");
+                    nova.setEsq(orig.getDir().getDir());
+                    nova.getDir().setDir(orig.getEsq().getDir());
+                    gerar(nova, reg);
                 }
-                if (orig.getDir().getEsq().equals(orig.getEsq().getDir())) {//ESQ.DIR = ESQ.DIR
-
-                } else if (orig.getDir().getEsq().equals(orig.getEsq().getEsq())) {//ESQ.DIR = ESQ.ESQ
-
+                if (orig.getDir().getEsq().equals(orig.getEsq().getDir())) {//DIR.ESQ = ESQ.DIR
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("|");
+                    nova.getDir().setInfo("&");
+                    nova.setEsq(orig.getDir().getEsq());
+                    nova.getDir().setEsq(orig.getEsq().getEsq());
+                    gerar(nova, reg);
+                } else if (orig.getDir().getEsq().equals(orig.getEsq().getEsq())) {//DIR.ESQ = ESQ.ESQ
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("|");
+                    nova.getDir().setInfo("&");
+                    nova.setEsq(orig.getDir().getEsq());
+                    nova.getDir().setEsq(orig.getEsq().getDir());
+                    gerar(nova, reg);
                 }
             }
-        } else if ("|".equals(orig.getInfo())) {             //analogo ao AND/OR porem com OR/AND
-            if ("&".equals(orig.getDir().getInfo())
-                    && "&".equals(orig.getEsq().getInfo())) {
-
+        } else if ("|".equals(orig.getInfo())) {                  //se raiz é OR                                    
+            if ("&".equals(orig.getDir().getInfo()) // dir AND
+                    && "&".equals(orig.getEsq().getInfo())) {      // esq é AND
+                if (orig.getDir().getDir().equals(orig.getEsq().getDir())) {//DIR.DIR = ESQ.DIR
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("&");
+                    nova.getDir().setInfo("|");
+                    nova.setEsq(orig.getDir().getDir());
+                    nova.getDir().setDir(orig.getEsq().getEsq());
+                    gerar(nova, reg);
+                } else if (orig.getDir().getDir().equals(orig.getEsq().getEsq())) {//DIR.DIR = ESQ.ESQ
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("&");
+                    nova.getDir().setInfo("|");
+                    nova.setEsq(orig.getDir().getDir());
+                    nova.getDir().setDir(orig.getEsq().getDir());
+                    gerar(nova, reg);
+                }
+                if (orig.getDir().getEsq().equals(orig.getEsq().getDir())) {//DIR.ESQ = ESQ.DIR
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("&");
+                    nova.getDir().setInfo("|");
+                    nova.setEsq(orig.getDir().getEsq());
+                    nova.getDir().setEsq(orig.getEsq().getEsq());
+                    gerar(nova, reg);
+                } else if (orig.getDir().getEsq().equals(orig.getEsq().getEsq())) {//DIR.ESQ = ESQ.ESQ
+                    Arvore nova = new Arvore(orig);
+                    nova.setInfo("&");
+                    nova.getDir().setInfo("|");
+                    nova.setEsq(orig.getDir().getEsq());
+                    nova.getDir().setEsq(orig.getEsq().getDir());
+                    gerar(nova, reg);
+                }
             }
         }
-
     }
 
     private void dn() {

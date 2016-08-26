@@ -27,11 +27,11 @@ public class Logicits {
         //Sintatico s = new Sintatico("p & (q & r)");
         //Sintatico s = new Sintatico("p | (q | r)");
         //Sintatico s = new Sintatico("(p & q) & r");
-        Sintatico s = new Sintatico("(p | q )| r");
+        //Sintatico s = new Sintatico("(p | q )| r");
         
         //Sintatico s = new Sintatico("p & (q | r)");
         //Sintatico s = new Sintatico("p | (q & r)");
-        //Sintatico s = new Sintatico("(p & q) | (p & r)");
+        Sintatico s = new Sintatico("(p | r) & (p | q)");
         //Sintatico s = new Sintatico("~p");
         //Sintatico s = new Sintatico("~(p & q)");
         //Sintatico s = new Sintatico("~p | ~q");
