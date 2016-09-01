@@ -51,8 +51,8 @@ public class Logicits {
          * Prof. Marcos
          * 
          */
-      Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s)");
-      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s ∨ t)");
+      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s)");
+      Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s ∨ t)");
       //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∧ s ∧ t)");
       //Sintatico s = new Sintatico("(p ∨ q) ∨ (r ∧ s ∧ t)");
       //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∨ s ∨ t)");
