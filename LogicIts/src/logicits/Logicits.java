@@ -47,6 +47,25 @@ public class Logicits {
         //Sintatico s = new Sintatico("p -> (q -> r)");
         //Sintatico s = new Sintatico("~(~~(~p))");
         
+        /**
+         * Prof. Marcos
+         * 
+         */
+      Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s)");
+      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s ∨ t)");
+      //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∧ s ∧ t)");
+      //Sintatico s = new Sintatico("(p ∨ q) ∨ (r ∧ s ∧ t)");
+      //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∨ s ∨ t)");
+      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∧ s ∧ t)"); 
+      
+        //Sintatico s = new Sintatico("~( (p ∨ q) ∧ (r ∨ s) )");
+        //Sintatico s = new Sintatico("~( (p ∧ q) ∨ (r ∨ s) )");
+        
+      //Sintatico s = new Sintatico("( (p ∧ q) -> (r ∨ s) )"); //~(p ∧ q) ∨ (r ∨ s)
+        
+      //Sintatico s = new Sintatico("( (p ∧ q) -> (r ∨ s) )"); //~(r ∧ s) -> ~(p ∨ q)
+
+      
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
                 Object next = token.next();
