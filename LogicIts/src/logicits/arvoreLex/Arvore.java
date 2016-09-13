@@ -146,7 +146,7 @@ public class Arvore {
     }
 
     private boolean ehOper(String token) {
-        if ("&".equals(token) || "|".equals(token)
+        if ("^".equals(token) || "v".equals(token)
                 || "<->".equals(token) || "->".equals(token)) {
             return true;
         }
@@ -154,7 +154,7 @@ public class Arvore {
     }
 
     public boolean raizEhOper() {
-        if ("&".equals(this.info) || "|".equals(this.info)
+        if ("^".equals(this.info) || "v".equals(this.info)
                 || "<->".equals(this.info) || "->".equals(this.info)) {
             return true;
 
@@ -259,20 +259,20 @@ public class Arvore {
 //            return null;
 //        }
         if (ehOper(this.info)) {
-            exp = "(";
+            exp = " (";
         }
         if (this.negacao) {
-            exp = exp + "~";
+            exp = exp + " ~ ";
         }
         if (this.esq != null) {
             exp = exp + this.esq.getEXP();
         }
-        exp = exp + this.info;
+        exp = exp + this.info+" ";
         if (this.dir != null) {
             exp = exp + this.dir.getEXP();
         }
         if (ehOper(this.info)) {
-            exp = exp+ ")";
+            exp = exp+ ") ";
         }
         return exp;
 

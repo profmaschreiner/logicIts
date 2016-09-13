@@ -22,14 +22,14 @@ public class LogicoLexico/*@bgen(jjtree)*/implements LogicoLexicoTreeConstants/*
             //}
         }catch(ParseException e){
             lista.clear();
-            lista.add("Errro");
+            lista.add("Erro");
             lista.add(e.getMessage());
             System.out.println(e.getMessage());
             System.out.println("Erro na analize!!!");
         }
-        for(int i=0;i<lista.size();i++){
-            System.out.println(lista.get(i));  
-        }            
+        //for(int i=0;i<lista.size();i++){
+        //    System.out.println(lista.get(i));  
+        //}            
     }			
 }
 PARSER_END(LogicoLexico)
@@ -40,12 +40,12 @@ TOKEN:{
 }
 
 TOKEN:{
-    <E: "&">{System.out.println("E -> "+image);}
-    |<OU: "|">{System.out.println("OU -> "+image);}
+    <E:"^">{System.out.println("E -> "+image);}
+    |<OU: "v">{System.out.println("OU -> "+image);}
 }
 
 TOKEN:{
-    <NEGACAO: ["~"](["~"])* >{System.out.println("NEGACAO -> "+image);}
+    <NEGACAO: "~"(["~"])* >{System.out.println("NEGACAO -> "+image);}
     
 }
 
@@ -60,6 +60,12 @@ TOKEN:{
 
 TOKEN:{
     <IMPLICA: "->">{System.out.println("IMPLICA -> "+image);}
+}
+
+TOKEN:{
+    <ERRO: ["-"]|["\u00e7"]|["!"]|["@"]|["#"]|["$"]|["%"]|["*"]|["["]|["]"]
+           |["\""]|["="]|["+"]|["/"]|["'"]|[";"]|["{"]|["}"]|["<"]|[">"]
+           >{System.out.println("ERRO -> "+image);}
 }
 
 

@@ -16,22 +16,22 @@ import logicits.javaccList.Sintatico;
  */
 public class Logicits {
     public static void main(String[] args) {
-        //Sintatico s = new Sintatico("p");
-        //Sintatico s = new Sintatico("p & p");
-        //Sintatico s = new Sintatico("p | p");
-        //Sintatico s = new Sintatico("p & q");
-        //Sintatico s = new Sintatico("q & p");
-        //Sintatico s = new Sintatico("p | q");
-        //Sintatico s = new Sintatico("q | p");
+        Sintatico s = new Sintatico("(~p ^ q)");//comutação errada
+        //Sintatico s = new Sintatico("(p ^ q)");
+        //Sintatico s = new Sintatico("p ~ p");
+        //Sintatico s = new Sintatico("p v q");
+        //Sintatico s = new Sintatico("q ^ p");
+        //Sintatico s = new Sintatico("p v q");
+        //Sintatico s = new Sintatico("q v p");
         
-        //Sintatico s = new Sintatico("p & (q & r)");
-        //Sintatico s = new Sintatico("p | (q | r)");
-        //Sintatico s = new Sintatico("(p & q) & r");
-        //Sintatico s = new Sintatico("(p | q )| r");
+        //Sintatico s = new Sintatico("p ^ (q ^ r)");
+        //Sintatico s = new Sintatico("p v (q v r)");
+        //Sintatico s = new Sintatico("(p ^ q) ^ r");
+        //Sintatico s = new Sintatico("(p v q )v r");
         
         //Sintatico s = new Sintatico("p & (q | r)");
         //Sintatico s = new Sintatico("p | (q & r)");
-        Sintatico s = new Sintatico("(p | r) & (p | q)");
+        //Sintatico s = new Sintatico("(p | r) & (p | q)");
         //Sintatico s = new Sintatico("~p");
         //Sintatico s = new Sintatico("~(p & q)");
         //Sintatico s = new Sintatico("~p | ~q");
@@ -52,7 +52,7 @@ public class Logicits {
          * 
          */
       //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s)");
-      Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s ∨ t)");
+      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s ∨ t)");
       //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∧ s ∧ t)");
       //Sintatico s = new Sintatico("(p ∨ q) ∨ (r ∧ s ∧ t)");
       //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∨ s ∨ t)");
@@ -71,7 +71,7 @@ public class Logicits {
                 Object next = token.next();
                 System.out.println(next.toString());
             }
-        }
+        
         
         Arvore a = new Arvore(s.lista,false);        
         a.imprime();
@@ -83,7 +83,7 @@ public class Logicits {
         ge.getLista().stream().forEach((equivalencia) -> {
             equivalencia.imprime();
         });
-        
+        }
         
     }
 }

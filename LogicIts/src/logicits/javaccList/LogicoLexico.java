@@ -18,14 +18,14 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
             //}
         } catch (ParseException e) {
             lista.clear();
-            lista.add("Errro");
+            lista.add("Erro");
             lista.add(e.getMessage());
             System.out.println(e.getMessage());
             System.out.println("Erro na analize!!!");
         }
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println(lista.get(i));
-        }
+        //for(int i=0;i<lista.size();i++){
+        //    System.out.println(lista.get(i));  
+        //}            
     }
 
     static final public List<String> program() throws ParseException {/*@bgen(jjtree) program */
@@ -398,7 +398,7 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
      */
     static public ParseException generateParseException() {
         jj_expentries.clear();
-        boolean[] la1tokens = new boolean[13];
+        boolean[] la1tokens = new boolean[14];
         if (jj_kind >= 0) {
             la1tokens[jj_kind] = true;
             jj_kind = -1;
@@ -412,7 +412,7 @@ public class LogicoLexico/*@bgen(jjtree)*/ implements LogicoLexicoTreeConstants,
                 }
             }
         }
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 14; i++) {
             if (la1tokens[i]) {
                 jj_expentry = new int[1];
                 jj_expentry[0] = i;

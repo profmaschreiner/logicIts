@@ -20,13 +20,16 @@ public class Sintatico {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        Sintatico sint = new Sintatico("p <-> q");
-
-    }
-
+//    public static void main(String[] args) {
+//        Sintatico sint = new Sintatico("p <-> q");
+//
+//    }
     public Sintatico(String s) {
         try {
+            s = s.replace("&", "^");
+            s = s.replace("|", "v");
+            s = s.replace("V", "v");
+            s = s.replace("¬", "~");
 
             StringReader stringReader = new StringReader(s);
             LogicoLexico analizador = new LogicoLexico(stringReader);

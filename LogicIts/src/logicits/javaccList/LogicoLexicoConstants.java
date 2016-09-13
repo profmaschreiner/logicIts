@@ -43,6 +43,10 @@ public interface LogicoLexicoConstants {
      * RegularExpression Id.
      */
     int IMPLICA = 8;
+    /**
+     * RegularExpression Id.
+     */
+    int ERRO = 9;
 
     /**
      * Lexical state.
@@ -56,12 +60,13 @@ public interface LogicoLexicoConstants {
         "<EOF>",
         "\"(\"",
         "\")\"",
-        "\"&\"",
-        "\"|\"",
+        "\"^\"",
+        "\"v\"",
         "<NEGACAO>",
         "<VARIAVEL>",
         "\"<->\"",
         "\"->\"",
+        "<ERRO>",
         "\" \"",
         "\"\\r\\n\"",
         "\"\\n\"",

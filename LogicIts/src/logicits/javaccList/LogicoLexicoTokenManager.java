@@ -25,6 +25,24 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
 
     private static final int jjStopStringLiteralDfa_0(int pos, long active0) {
         switch (pos) {
+            case 0:
+                if ((active0 & 0x10L) != 0L) {
+                    return 2;
+                }
+                if ((active0 & 0x180L) != 0L) {
+                    jjmatchedKind = 9;
+                    return -1;
+                }
+                return -1;
+            case 1:
+                if ((active0 & 0x180L) != 0L) {
+                    if (jjmatchedPos == 0) {
+                        jjmatchedKind = 9;
+                        jjmatchedPos = 0;
+                    }
+                    return -1;
+                }
+                return -1;
             default:
                 return -1;
         }
@@ -43,9 +61,7 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
     static private int jjMoveStringLiteralDfa0_0() {
         switch (curChar) {
             case 13:
-                return jjMoveStringLiteralDfa1_0(0x400L);
-            case 38:
-                return jjStopAtPos(0, 3);
+                return jjMoveStringLiteralDfa1_0(0x800L);
             case 40:
                 return jjStopAtPos(0, 1);
             case 41:
@@ -54,8 +70,10 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
                 return jjMoveStringLiteralDfa1_0(0x100L);
             case 60:
                 return jjMoveStringLiteralDfa1_0(0x80L);
-            case 124:
-                return jjStopAtPos(0, 4);
+            case 94:
+                return jjStopAtPos(0, 3);
+            case 118:
+                return jjStartNfaWithStates_0(0, 4, 2);
             default:
                 return jjMoveNfa_0(1, 0);
         }
@@ -70,8 +88,8 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
         }
         switch (curChar) {
             case 10:
-                if ((active0 & 0x400L) != 0L) {
-                    return jjStopAtPos(1, 10);
+                if ((active0 & 0x800L) != 0L) {
+                    return jjStopAtPos(1, 11);
                 }
                 break;
             case 45:
@@ -109,9 +127,23 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
         return jjStartNfa_0(1, active0);
     }
 
+    static private int jjStartNfaWithStates_0(int pos, int kind, int state) {
+        jjmatchedKind = kind;
+        jjmatchedPos = pos;
+        try {
+            curChar = input_stream.readChar();
+        } catch (java.io.IOException e) {
+            return pos + 1;
+        }
+        return jjMoveNfa_0(state, pos + 1);
+    }
+    static final long[] jjbitVec0 = {
+        0x0L, 0x0L, 0x0L, 0x8000000000L
+    };
+
     static private int jjMoveNfa_0(int startState, int curPos) {
         int startsAt = 0;
-        jjnewStateCnt = 3;
+        jjnewStateCnt = 4;
         int i = 1;
         jjstateSet[0] = startState;
         int kind = 0x7fffffff;
@@ -123,6 +155,11 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
                 long l = 1L << curChar;
                 do {
                     switch (jjstateSet[--i]) {
+                        case 1:
+                            if ((0x7800acbe00000000L & l) != 0L) {
+                                kind = 9;
+                            }
+                            break;
                         case 2:
                             if ((0x3ff000000000000L & l) == 0L) {
                                 break;
@@ -145,6 +182,10 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
                                 }
                                 {
                                     jjCheckNAdd(2);
+                                }
+                            } else if ((0x2800000028000001L & l) != 0L) {
+                                if (kind > 9) {
+                                    kind = 9;
                                 }
                             } else if (curChar == 126) {
                                 if (kind > 5) {
@@ -175,6 +216,11 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
                                 jjCheckNAdd(2);
                             }
                             break;
+                        case 3:
+                            if ((0x2800000028000001L & l) != 0L) {
+                                kind = 9;
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -184,6 +230,11 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
                 long l2 = 1L << (curChar & 077);
                 do {
                     switch (jjstateSet[--i]) {
+                        case 1:
+                            if ((jjbitVec0[i2] & l2) != 0L && kind > 9) {
+                                kind = 9;
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -195,7 +246,7 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
                 kind = 0x7fffffff;
             }
             ++curPos;
-            if ((i = jjnewStateCnt) == (startsAt = 3 - (jjnewStateCnt = startsAt))) {
+            if ((i = jjnewStateCnt) == (startsAt = 4 - (jjnewStateCnt = startsAt))) {
                 return curPos;
             }
             try {
@@ -211,8 +262,8 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
      * Token literal values.
      */
     public static final String[] jjstrLiteralImages = {
-        "", "\50", "\51", "\46", "\174", null, null, "\74\55\76", "\55\76", null, null,
-        null, null,};
+        "", "\50", "\51", "\136", "\166", null, null, "\74\55\76", "\55\76", null,
+        null, null, null, null,};
 
     static protected Token jjFillToken() {
         final Token t;
@@ -353,6 +404,10 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
                 lengthOfMatch = jjstrLiteralImages[8].length();
                 System.out.println("IMPLICA -> " + image);
                 break;
+            case 9:
+                image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
+                System.out.println("ERRO -> " + image);
+                break;
             default:
                 break;
         }
@@ -409,7 +464,7 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
     static private void ReInitRounds() {
         int i;
         jjround = 0x80000001;
-        for (i = 3; i-- > 0;) {
+        for (i = 4; i-- > 0;) {
             jjrounds[i] = 0x80000000;
         }
     }
@@ -439,13 +494,13 @@ public class LogicoLexicoTokenManager implements LogicoLexicoConstants {
     public static final String[] lexStateNames = {
         "DEFAULT",};
     static final long[] jjtoToken = {
-        0x1ffL,};
+        0x3ffL,};
     static final long[] jjtoSkip = {
-        0x1e00L,};
+        0x3c00L,};
     static protected SimpleCharStream input_stream;
 
-    static private final int[] jjrounds = new int[3];
-    static private final int[] jjstateSet = new int[2 * 3];
+    static private final int[] jjrounds = new int[4];
+    static private final int[] jjstateSet = new int[2 * 4];
 
     private static final StringBuilder jjimage = new StringBuilder();
     private static StringBuilder image = jjimage;
