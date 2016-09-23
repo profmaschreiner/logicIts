@@ -104,7 +104,7 @@ public class Arvore implements Cloneable {
             this.info = exp.get(0);
             exp.remove(0);
             dir = new Arvore(exp, false);
-        }else if(negacao){
+        } else if (negacao) {
             this.negacao = !this.negacao;
         }
     }
@@ -156,7 +156,7 @@ public class Arvore implements Cloneable {
     private boolean ehNegacao(String token) {
         boolean neg = false;
         while (!token.isEmpty() && token.indexOf("~") == 0) {
-            System.out.println("negou");
+            //System.out.println("negou");
             token = token.substring(1, token.length());
             neg = !neg;
         }
@@ -277,6 +277,10 @@ public class Arvore implements Cloneable {
     @Override
     public String toString() {
         return this.getEXP(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void negarArvore() {
+        this.negacao = !this.negacao;
     }
 
 }

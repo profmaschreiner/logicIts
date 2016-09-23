@@ -272,29 +272,96 @@ public class GeradorDeEquivalencia {
     private void dm() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.DM;
+        if (orig.isNegacao()) {
+            if ("^".equals(orig.getInfo())) {
+                Arvore nova = new Arvore(orig);
+                nova.setInfo("v");
+                nova.negarArvore();
+                nova.getDir().negarArvore();
+                nova.getEsq().negarArvore();
+                gerar(nova, reg);
+            }
+            if ("v".equals(orig.getInfo())) {
+                Arvore nova = new Arvore(orig);
+                nova.setInfo("^");
+                nova.negarArvore();
+                nova.getDir().negarArvore();
+                nova.getEsq().negarArvore();
+                gerar(nova, reg);
+            }
+        }
 
     }
 
     private void cond() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.COND;
-
+        if ("->".equals(orig.getInfo())) {
+            Arvore nova = new Arvore(orig);
+            nova.setInfo("v");
+            nova.getEsq().negarArvore();
+            gerar(nova, reg);
+        }
     }
 
     private void bicond() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.BICOND;
-
+        if ("<->".equals(orig.getInfo())) {
+            Arvore nova1 = new Arvore(orig);
+            nova1.setInfo("^");
+            Arvore nova1Esq = new Arvore(orig);
+            nova1Esq.setInfo("->");
+            nova1.setEsq(nova1Esq);
+            Arvore nova1Dir = new Arvore(orig);
+            nova1Dir.setInfo("->");
+            nova1Dir.setEsq(orig.getDir());
+            nova1Dir.setDir(orig.getEsq());
+            nova1.setDir(nova1Dir);
+            gerar(nova1, reg);
+            
+            Arvore nova2 = new Arvore(orig);
+            nova2.setInfo("v");
+            Arvore nova2Esq = new Arvore(orig);
+            nova2Esq.setInfo("^");
+            nova2.setEsq(nova2Esq);
+            Arvore nova2Dir = new Arvore(orig);
+            nova2Dir.setInfo("^");
+            nova2Dir.getDir().negarArvore();
+            nova2Dir.getEsq().negarArvore();
+            nova2.setDir(nova2Dir);
+            gerar(nova2, reg);            
+        }
     }
 
     private void cp() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.CP;
+        if ("->".equals(orig.getInfo())) {
+            Arvore nova = new Arvore(orig);
+            nova.setDir(orig.getEsq());
+            nova.setEsq(orig.getDir());
+            nova.getEsq().negarArvore();
+            nova.getDir().negarArvore();
+            gerar(nova, reg);
+        }
     }
 
     private void ei() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.EI;
+        if ("^".equals(orig.getInfo()) && "->".equals(orig.getDir().getInfo())) {
+            Arvore nova = new Arvore(orig);
+            nova.setInfo("->");            
+            gerar(nova, reg);
+        }
+        if ("^".equals(orig.getInfo()) && "->".equals(orig.getEsq().getInfo())) {
+            Arvore nova = new Arvore(orig);
+            nova.setInfo("->"); 
+            nova.setDir(orig.getEsq());
+            nova.setEsq(orig.getDir());                    
+            gerar(nova, reg);
+        }
     }
 
 }

@@ -48,7 +48,17 @@ public class Logicits {
         //Sintatico s = new Sintatico("~(~~(~p))");
         
         
-        Sintatico s = new Sintatico("(p v q) ^ (r v s)");
+         
+                 
+        //Sintatico s = new Sintatico("~(p ^ q)");// dm ¬p ∨ ¬q 
+        //Sintatico s = new Sintatico("~(p v q)");// dm ¬p ∧ ¬q
+        //Sintatico s = new Sintatico("p -> q ");// cond ¬p ∨ q
+        //Sintatico s = new Sintatico("p <-> q ");// bicond (p → q) ∧ (q → p) E (p ∧ q) ∨ (¬p ∧ ¬q)        
+        //Sintatico s = new Sintatico("p -> q ");// cp ¬p -> ¬q
+        Sintatico s = new Sintatico("(q -> r)^p");// ei p → (q → r)
+        
+        
+        //Sintatico s = new Sintatico("(p v q) ^ (r v s)");
         //Sintatico s = new Sintatico("(p v q) ^ (r v s v t)");
         //Sintatico s = new Sintatico("(p ^ q) v (r ^ s ^ t)");
         //Sintatico s = new Sintatico("(p v q) v (r ^ s ^ t)");
