@@ -70,7 +70,7 @@ public class GeradorDeEquivalencia {
         Regra reg = Regra.ID;                                  //define a regra a ser utilizada por este metodo
         if (!orig.raizEhOper()) {//se a raiz é uma variavel
             idConjDisj(orig, reg);
-        } else if (("^".equals(orig.getInfo()) || "v".equals(orig.getInfo()))//se raiz AND ou OR
+        } else if (("^".equals(orig.getProposicao()) || "v".equals(orig.getProposicao()))//se raiz AND ou OR
                 && orig.getDir().equals(orig.getEsq())) {                    // e DIR = ESQ
             Arvore nova = new Arvore(orig.getEsq()); //gera equivalencia SIMPLIFICADA
             gerar(nova, reg);
@@ -81,7 +81,7 @@ public class GeradorDeEquivalencia {
     private void com() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.COM;             //define a regra a ser utilizada por este metodo
-        if (("^".equals(orig.getInfo()) || "v".equals(orig.getInfo())) // se raiz da arvore é AND ou OR
+        if (("^".equals(orig.getProposicao()) || "v".equals(orig.getProposicao())) // se raiz da arvore é AND ou OR
                 && !orig.getDir().equals(orig.getEsq())) { // e ela nao é espelhada
             Arvore nova = new Arvore(orig);
             if (orig.getEsq() != null) {
@@ -97,9 +97,9 @@ public class GeradorDeEquivalencia {
     private void assoc() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.ASSOC;
-        if ("^".equals(orig.getInfo())) {                  //se raiz é AND                                    
+        if ("^".equals(orig.getProposicao())) {                  //se raiz é AND                                    
             assocAND(orig, reg);
-        } else if ("v".equals(orig.getInfo())) {             //se a raiz é OR
+        } else if ("v".equals(orig.getProposicao())) {             //se a raiz é OR
             assocOR(orig, reg);
         }
 
@@ -109,9 +109,9 @@ public class GeradorDeEquivalencia {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.DIST;
 
-        if ("^".equals(orig.getInfo())) {                  //se raiz é AND                                    
+        if ("^".equals(orig.getProposicao())) {                  //se raiz é AND                                    
             distAND(orig, reg);
-        } else if ("v".equals(orig.getInfo())) {             //analogo ao AND/OR porem com OR/AND
+        } else if ("v".equals(orig.getProposicao())) {             //analogo ao AND/OR porem com OR/AND
             distOR(orig, reg);
         }
     }
@@ -126,10 +126,10 @@ public class GeradorDeEquivalencia {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.DM;
         if (orig.isNegacao()) {
-            if ("^".equals(orig.getInfo())) {
+            if ("^".equals(orig.getProposicao())) {
                 dmDisj(orig, reg);
             }
-            if ("v".equals(orig.getInfo())) {
+            if ("v".equals(orig.getProposicao())) {
                 dmConj(orig, reg);
             }
         }
@@ -139,9 +139,9 @@ public class GeradorDeEquivalencia {
     private void cond() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.COND;
-        if ("->".equals(orig.getInfo())) {
+        if ("->".equals(orig.getProposicao())) {
             Arvore nova = new Arvore(orig);
-            nova.setInfo("v");
+            nova.setProposicao("v");
             nova.getEsq().negarArvore();
             gerar(nova, reg);
         }
@@ -150,16 +150,16 @@ public class GeradorDeEquivalencia {
     private void bicond() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.BICOND;
-        if ("<->".equals(orig.getInfo())) {
+        if ("<->".equals(orig.getProposicao())) {
             bicondImplica(orig, reg);
-            bicoxndDisjun(orig, reg);
+            bicondDisjun(orig, reg);
         }
     }
 
     private void cp() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.CP;
-        if ("->".equals(orig.getInfo())) {
+        if ("->".equals(orig.getProposicao())) {
             Arvore nova = new Arvore(orig);
             nova.setDir(orig.getEsq());
             nova.setEsq(orig.getDir());
@@ -172,14 +172,14 @@ public class GeradorDeEquivalencia {
     private void ei() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.EI;
-        if ("^".equals(orig.getInfo()) && "->".equals(orig.getDir().getInfo())) {
+        if ("^".equals(orig.getProposicao()) && "->".equals(orig.getDir().getProposicao())) {
             Arvore nova = new Arvore(orig);
-            nova.setInfo("->");
+            nova.setProposicao("->");
             gerar(nova, reg);
         }
-        if ("^".equals(orig.getInfo()) && "->".equals(orig.getEsq().getInfo())) {
+        if ("^".equals(orig.getProposicao()) && "->".equals(orig.getEsq().getProposicao())) {
             Arvore nova = new Arvore(orig);
-            nova.setInfo("->");
+            nova.setProposicao("->");
             nova.setDir(orig.getEsq());
             nova.setEsq(orig.getDir());
             gerar(nova, reg);
@@ -198,14 +198,14 @@ public class GeradorDeEquivalencia {
     }
 
     private void assocAND(Arvore orig, Regra reg) {
-        if ("^".equals(orig.getDir().getInfo()) // dir tambem
+        if ("^".equals(orig.getDir().getProposicao()) // dir tambem
                 && !orig.getEsq().raizEhOper()) {      // esq é variavel
             Arvore nova = new Arvore(orig.getDir());
             Arvore aux = new Arvore(orig);               // aplica rotação 
             aux.setDir(nova.getEsq());                   // a esquerda (igual AVL)
             nova.setEsq(aux);
             gerar(nova, reg);
-        } else if ("^".equals(orig.getEsq().getInfo()) // esq tambem
+        } else if ("^".equals(orig.getEsq().getProposicao()) // esq tambem
                 && !orig.getDir().raizEhOper()) {       // dir é variavel
             Arvore nova = new Arvore(orig.getEsq());
             Arvore aux = new Arvore(orig);               // aplica rotação 
@@ -216,14 +216,14 @@ public class GeradorDeEquivalencia {
     }
 
     private void assocOR(Arvore orig, Regra reg) {
-        if ("v".equals(orig.getDir().getInfo())
+        if ("v".equals(orig.getDir().getProposicao())
                 && !orig.getEsq().raizEhOper()) {
             Arvore nova = new Arvore(orig.getDir());
             Arvore aux = new Arvore(orig);               // aplica rotação 
             aux.setDir(nova.getEsq());                   // a esquerda (igual AVL)
             nova.setEsq(aux);
             gerar(nova, reg);
-        } else if ("v".equals(orig.getEsq().getInfo())
+        } else if ("v".equals(orig.getEsq().getProposicao())
                 && !orig.getDir().raizEhOper()) {
             Arvore nova = new Arvore(orig.getEsq());
             Arvore aux = new Arvore(orig);               // aplica rotação 
@@ -235,57 +235,57 @@ public class GeradorDeEquivalencia {
 
     private void distAND(Arvore orig, Regra reg) {
         
-        if ("v".equals(orig.getDir().getInfo()) // dir OR
+        if ("v".equals(orig.getDir().getProposicao()) // dir OR
                 && !orig.getEsq().raizEhOper()) {      // esq é variavel
             Arvore nova = new Arvore(orig);
-            nova.setInfo("v");
-            nova.getEsq().setInfo("^");  // realiza mutações para distributiva
-            nova.getDir().setInfo("^");
+            nova.setProposicao("v");
+            nova.getEsq().setProposicao("^");  // realiza mutações para distributiva
+            nova.getDir().setProposicao("^");
             nova.getEsq().setEsq(orig.getEsq());   //troca de ponteiros
             nova.getEsq().setDir(orig.getDir().getEsq()); // e distribuição 
             nova.getDir().setEsq(orig.getEsq());
             gerar(nova, reg);
 
-        } else if ("v".equals(orig.getEsq().getInfo()) // esq OR
+        } else if ("v".equals(orig.getEsq().getProposicao()) // esq OR
                 && !orig.getDir().raizEhOper()) {       // dir é variavel
             Arvore nova = new Arvore(orig);
-            nova.setInfo("v");
-            nova.getEsq().setInfo("^");  // realiza mutações para distributiva
-            nova.getDir().setInfo("^");
+            nova.setProposicao("v");
+            nova.getEsq().setProposicao("^");  // realiza mutações para distributiva
+            nova.getDir().setProposicao("^");
             nova.getDir().setDir(orig.getDir());   //troca de ponteiros
             nova.getDir().setEsq(orig.getEsq().getDir()); // e distribuição 
             nova.getEsq().setDir(orig.getDir());
             gerar(nova, reg);
         }
 
-        if ("v".equals(orig.getDir().getInfo()) // dir OR
-                && "v".equals(orig.getEsq().getInfo())) {      // esq é OR
+        if ("v".equals(orig.getDir().getProposicao()) // dir OR
+                && "v".equals(orig.getEsq().getProposicao())) {      // esq é OR
             if (orig.getDir().getDir().equals(orig.getEsq().getDir())) {//DIR.DIR = ESQ.DIR
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("v");
-                nova.getDir().setInfo("^");
+                nova.setProposicao("v");
+                nova.getDir().setProposicao("^");
                 nova.setEsq(orig.getDir().getDir());
                 nova.getDir().setDir(orig.getEsq().getEsq());
                 gerar(nova, reg);
             } else if (orig.getDir().getDir().equals(orig.getEsq().getEsq())) {//DIR.DIR = ESQ.ESQ
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("v");
-                nova.getDir().setInfo("^");
+                nova.setProposicao("v");
+                nova.getDir().setProposicao("^");
                 nova.setEsq(orig.getDir().getDir());
                 nova.getDir().setDir(orig.getEsq().getDir());
                 gerar(nova, reg);
             }
             if (orig.getDir().getEsq().equals(orig.getEsq().getDir())) {//DIR.ESQ = ESQ.DIR
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("v");
-                nova.getDir().setInfo("^");
+                nova.setProposicao("v");
+                nova.getDir().setProposicao("^");
                 nova.setEsq(orig.getDir().getEsq());
                 nova.getDir().setEsq(orig.getEsq().getEsq());
                 gerar(nova, reg);
             } else if (orig.getDir().getEsq().equals(orig.getEsq().getEsq())) {//DIR.ESQ = ESQ.ESQ
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("v");
-                nova.getDir().setInfo("^");
+                nova.setProposicao("v");
+                nova.getDir().setProposicao("^");
                 nova.setEsq(orig.getDir().getEsq());
                 nova.getDir().setEsq(orig.getEsq().getDir());
                 gerar(nova, reg);
@@ -294,56 +294,56 @@ public class GeradorDeEquivalencia {
     }
 
     private void distOR(Arvore orig, Regra reg) {
-        if ("^".equals(orig.getDir().getInfo())
+        if ("^".equals(orig.getDir().getProposicao())
                 && !orig.getEsq().raizEhOper()) {
             Arvore nova = new Arvore(orig);
-            nova.setInfo("^");
-            nova.getEsq().setInfo("v");  // realiza mutações para distributiva
-            nova.getDir().setInfo("v");
+            nova.setProposicao("^");
+            nova.getEsq().setProposicao("v");  // realiza mutações para distributiva
+            nova.getDir().setProposicao("v");
             nova.getEsq().setEsq(orig.getEsq());   //troca de ponteiros
             nova.getEsq().setDir(orig.getDir().getEsq()); // e distribuição 
             nova.getDir().setEsq(orig.getEsq());
             gerar(nova, reg);
-        } else if ("^".equals(orig.getEsq().getInfo())
+        } else if ("^".equals(orig.getEsq().getProposicao())
                 && !orig.getDir().raizEhOper()) {
             Arvore nova = new Arvore(orig);
-            nova.setInfo("^");
-            nova.getEsq().setInfo("v");  // realiza mutações para distributiva
-            nova.getDir().setInfo("v");
+            nova.setProposicao("^");
+            nova.getEsq().setProposicao("v");  // realiza mutações para distributiva
+            nova.getDir().setProposicao("v");
             nova.getDir().setDir(orig.getDir());   //troca de ponteiros
             nova.getDir().setEsq(orig.getEsq().getDir()); // e distribuição 
             nova.getEsq().setDir(orig.getDir());
             gerar(nova, reg);
         }
 
-        if ("^".equals(orig.getDir().getInfo()) // dir AND
-                && "^".equals(orig.getEsq().getInfo())) {      // esq é AND
+        if ("^".equals(orig.getDir().getProposicao()) // dir AND
+                && "^".equals(orig.getEsq().getProposicao())) {      // esq é AND
             if (orig.getDir().getDir().equals(orig.getEsq().getDir())) {//DIR.DIR = ESQ.DIR
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("^");
-                nova.getDir().setInfo("v");
+                nova.setProposicao("^");
+                nova.getDir().setProposicao("v");
                 nova.setEsq(orig.getDir().getDir());
                 nova.getDir().setDir(orig.getEsq().getEsq());
                 gerar(nova, reg);
             } else if (orig.getDir().getDir().equals(orig.getEsq().getEsq())) {//DIR.DIR = ESQ.ESQ
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("^");
-                nova.getDir().setInfo("v");
+                nova.setProposicao("^");
+                nova.getDir().setProposicao("v");
                 nova.setEsq(orig.getDir().getDir());
                 nova.getDir().setDir(orig.getEsq().getDir());
                 gerar(nova, reg);
             }
             if (orig.getDir().getEsq().equals(orig.getEsq().getDir())) {//DIR.ESQ = ESQ.DIR
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("^");
-                nova.getDir().setInfo("v");
+                nova.setProposicao("^");
+                nova.getDir().setProposicao("v");
                 nova.setEsq(orig.getDir().getEsq());
                 nova.getDir().setEsq(orig.getEsq().getEsq());
                 gerar(nova, reg);
             } else if (orig.getDir().getEsq().equals(orig.getEsq().getEsq())) {//DIR.ESQ = ESQ.ESQ
                 Arvore nova = new Arvore(orig);
-                nova.setInfo("^");
-                nova.getDir().setInfo("v");
+                nova.setProposicao("^");
+                nova.getDir().setProposicao("v");
                 nova.setEsq(orig.getDir().getEsq());
                 nova.getDir().setEsq(orig.getEsq().getDir());
                 gerar(nova, reg);
@@ -353,7 +353,7 @@ public class GeradorDeEquivalencia {
 
     private void dmDisj(Arvore orig, Regra reg) {
         Arvore nova = new Arvore(orig);
-        nova.setInfo("v");
+        nova.setProposicao("v");
         nova.negarArvore();
         nova.getDir().negarArvore();
         nova.getEsq().negarArvore();
@@ -362,7 +362,7 @@ public class GeradorDeEquivalencia {
 
     private void dmConj(Arvore orig, Regra reg) {
         Arvore nova = new Arvore(orig);
-        nova.setInfo("^");
+        nova.setProposicao("^");
         nova.negarArvore();
         nova.getDir().negarArvore();
         nova.getEsq().negarArvore();
@@ -371,26 +371,26 @@ public class GeradorDeEquivalencia {
 
     private void bicondImplica(Arvore orig, Regra reg) {
         Arvore nova1 = new Arvore(orig);
-        nova1.setInfo("^");
+        nova1.setProposicao("^");
         Arvore nova1Esq = new Arvore(orig);
-        nova1Esq.setInfo("->");
+        nova1Esq.setProposicao("->");
         nova1.setEsq(nova1Esq);
         Arvore nova1Dir = new Arvore(orig);
-        nova1Dir.setInfo("->");
+        nova1Dir.setProposicao("->");
         nova1Dir.setEsq(orig.getDir());
         nova1Dir.setDir(orig.getEsq());
         nova1.setDir(nova1Dir);
         gerar(nova1, reg);
     }
 
-    private void bicoxndDisjun(Arvore orig, Regra reg) {
+    private void bicondDisjun(Arvore orig, Regra reg) {
         Arvore nova2 = new Arvore(orig);
-        nova2.setInfo("v");
+        nova2.setProposicao("v");
         Arvore nova2Esq = new Arvore(orig);
-        nova2Esq.setInfo("^");
+        nova2Esq.setProposicao("^");
         nova2.setEsq(nova2Esq);
         Arvore nova2Dir = new Arvore(orig);
-        nova2Dir.setInfo("^");
+        nova2Dir.setProposicao("^");
         nova2Dir.getDir().negarArvore();
         nova2Dir.getEsq().negarArvore();
         nova2.setDir(nova2Dir);
