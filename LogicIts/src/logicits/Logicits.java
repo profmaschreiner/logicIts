@@ -16,54 +16,69 @@ import logicits.javaccList.Sintatico;
  */
 public class Logicits {
     public static void main(String[] args) {
-        Sintatico s = new Sintatico("(~p ^ q)");//comutação errada
+        //Sintatico s = new Sintatico("~(~~p)");
         //Sintatico s = new Sintatico("(p ^ q)");
-        //Sintatico s = new Sintatico("p ~ p");
+        //Sintatico s = new Sintatico("p ^ p");
         //Sintatico s = new Sintatico("p v q");
         //Sintatico s = new Sintatico("q ^ p");
         //Sintatico s = new Sintatico("p v q");
         //Sintatico s = new Sintatico("q v p");
         
-        //Sintatico s = new Sintatico("p ^ (q ^ r)");
+        //Sintatico s = new Sintatico("p ^ ~(q ^ r)");  // estou com duvidas quanto a isso
         //Sintatico s = new Sintatico("p v (q v r)");
         //Sintatico s = new Sintatico("(p ^ q) ^ r");
         //Sintatico s = new Sintatico("(p v q )v r");
         
-        //Sintatico s = new Sintatico("p & (q | r)");
-        //Sintatico s = new Sintatico("p | (q & r)");
-        //Sintatico s = new Sintatico("(p | r) & (p | q)");
+        //Sintatico s = new Sintatico("p ^ ~(q v r)");  // estou com duvidas quanto a isso
+        //Sintatico s = new Sintatico("p ^ (q v r)");
+        //Sintatico s = new Sintatico("(p v r) ^ ~(p v q)"); // estou com duvidas quanto a isso
         //Sintatico s = new Sintatico("~p");
-        //Sintatico s = new Sintatico("~(p & q)");
-        //Sintatico s = new Sintatico("~p | ~q");
-        //Sintatico s = new Sintatico("~(p | q)");
-        //Sintatico s = new Sintatico("~p & ~q");
+        //Sintatico s = new Sintatico("~(p ^ q)");
+        //Sintatico s = new Sintatico("~p v ~q");
+        //Sintatico s = new Sintatico("~(p v q)");
+        //Sintatico s = new Sintatico("~p ^ ~q");
         //Sintatico s = new Sintatico("p -> q");
-        //Sintatico s = new Sintatico("~p | q");
+        //Sintatico s = new Sintatico("~p v q");
         //Sintatico s = new Sintatico("p <-> q");
-        //Sintatico s = new Sintatico("(p -> q) & (q -> p)");
-        //Sintatico s = new Sintatico("(p & q) | (~p & ~q)");
+        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");
+        //Sintatico s = new Sintatico("(p ^ q) v (~p ^ ~q)");  // estou com duvidas quanto a isso
         //Sintatico s = new Sintatico("~q -> ~p");
-        //Sintatico s = new Sintatico("((p & q) -> r)");
+        //Sintatico s = new Sintatico("((p ^ q) -> r)");
         //Sintatico s = new Sintatico("p -> (q -> r)");
         //Sintatico s = new Sintatico("~(~~(~p))");
         
+        
+        Sintatico s = new Sintatico("(p v q) ^ (r v s)");
+        //Sintatico s = new Sintatico("(p v q) ^ (r v s v t)");
+        //Sintatico s = new Sintatico("(p ^ q) v (r ^ s ^ t)");
+        //Sintatico s = new Sintatico("(p v q) v (r ^ s ^ t)");
+        //Sintatico s = new Sintatico("(p ^ q) v (r ^ s v t)");
+        //Sintatico s = new Sintatico("(p v q) ^ (r ^ s ^ t)"); 
+
+        //Sintatico s = new Sintatico("~( (p v q) ^ (r v s) )");
+        //Sintatico s = new Sintatico("~( (p ^ q) v (r v s) )");
+
+        //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )"); //~(p ∧ q) ∨ (r ∨ s)
+
+        //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )"); //~(r ∧ s) -> ~(p ∨ q)
+
         /**
          * Prof. Marcos
          * 
          */
-      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s)");
-      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s ∨ t)");
-      //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∧ s ∧ t)");
-      //Sintatico s = new Sintatico("(p ∨ q) ∨ (r ∧ s ∧ t)");
-      //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∨ s ∨ t)");
-      //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∧ s ∧ t)"); 
-      
+        //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s)");
+        //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∨ s ∨ t)");
+        //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∧ s ∧ t)");
+        //Sintatico s = new Sintatico("(p ∨ q) ∨ (r ∧ s ∧ t)");
+        //Sintatico s = new Sintatico("(p ∧ q) ∨ (r ∨ s ∨ t)");
+        //Sintatico s = new Sintatico("(p ∨ q) ∧ (r ∧ s ∧ t)"); 
+
         //Sintatico s = new Sintatico("~( (p ∨ q) ∧ (r ∨ s) )");
         //Sintatico s = new Sintatico("~( (p ∧ q) ∨ (r ∨ s) )");
-        
-      //Sintatico s = new Sintatico("( (p ∧ q) -> (r ∨ s) )"); //~(p ∧ q) ∨ (r ∨ s)
-        
-      //Sintatico s = new Sintatico("( (p ∧ q) -> (r ∨ s) )"); //~(r ∧ s) -> ~(p ∨ q)
+
+        //Sintatico s = new Sintatico("( (p ∧ q) -> (r ∨ s) )"); //~(p ∧ q) ∨ (r ∨ s)
+
+        //Sintatico s = new Sintatico("( (p ∧ q) -> (r ∨ s) )"); //~(r ∧ s) -> ~(p ∨ q)
 
       
         if (!"Erro".equals(s.lista.get(0))) {

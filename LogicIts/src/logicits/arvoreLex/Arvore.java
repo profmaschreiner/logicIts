@@ -6,12 +6,14 @@
 package logicits.arvoreLex;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author fabio
  */
-public class Arvore {
+public class Arvore implements Cloneable {
 
     private boolean negacao = false;
     private String info;
@@ -20,7 +22,7 @@ public class Arvore {
 
     public Arvore(List<String> exp, boolean negacao) {
         this.negacao = negacao;
-        this.insere(exp, negacao);
+        this.insere(exp);
     }
 
     public Arvore(String info, boolean negacao) {
@@ -29,55 +31,40 @@ public class Arvore {
     }
 
     public Arvore(Arvore arvore) {
-        if (arvore.getDir() != null) {
-            this.setDir(arvore.getDir());
+        try {
+            Arvore aux = arvore.clone();
+            this.info = aux.getInfo();
+            this.negacao = aux.isNegacao();
+            if (aux.getDir() != null) {
+                this.dir = aux.getDir().clone();
+            }
+            if (aux.getEsq() != null) {
+                this.esq = aux.getEsq().clone();
+            }
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Arvore.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (arvore.getEsq() != null) {
-            this.setEsq(arvore.getEsq());
-        }
-        this.setInfo(arvore.getInfo());
-        this.negacao = arvore.isNegacao();
+
+    }
+
+    @Override
+    protected Arvore clone() throws CloneNotSupportedException {
+        return (Arvore) super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void setDir(Arvore dir) {
-        if (dir == null) {
-            this.dir = null;
-        } else if (this.dir == null) {
-            this.dir = new Arvore(dir);
-        } else {
-            this.dir.setInfo(dir.getInfo());
-            this.negacao = dir.isNegacao();
-            if (dir.getDir() != null) {
-                this.getDir().setDir(dir.getDir());
-            } else {
-                this.getDir().setDir(null);
-            }
-            if (dir.getEsq() != null) {
-                this.getDir().setEsq(dir.getEsq());
-            } else {
-                this.getDir().setEsq(null);
-            }
+        try {
+            this.dir = dir.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Arvore.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void setEsq(Arvore esq) {
-        if (esq == null) {
-            this.esq = null;
-        } else if (this.esq == null) {
-            this.esq = new Arvore(esq);
-        } else {
-            this.esq.setInfo(esq.getInfo());
-            this.negacao = esq.isNegacao();
-            if (esq.getDir() != null) {
-                this.getEsq().setDir(esq.getDir());
-            } else {
-                this.getEsq().setDir(null);
-            }
-            if (esq.getEsq() != null) {
-                this.getEsq().setEsq(esq.getEsq());
-            } else {
-                this.getEsq().setEsq(null);
-            }
+        try {
+            this.esq = esq.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Arvore.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -105,18 +92,20 @@ public class Arvore {
         return false;
     }
 
-    private void insere(List<String> exp, boolean negacao) {
-        expressao(exp, negacao);
+    private void insere(List<String> exp) {
+        expressao(exp, false);
     }
 
     private void expressao(List<String> exp, boolean negacao) {
-        this.termo(exp, negacao);
+        this.termo(exp, false);
         if (exp.size() > 0 && ehOper(exp.get(0))) {
             this.esq = new Arvore(this);
             this.negacao = negacao;
             this.info = exp.get(0);
             exp.remove(0);
             dir = new Arvore(exp, false);
+        }else if(negacao){
+            this.negacao = !this.negacao;
         }
     }
 
@@ -130,9 +119,11 @@ public class Arvore {
                 exp.remove(exp.get(0));
             }
             if ("(".equals(exp.get(0))) {
+
                 exp.remove(0);
                 this.expressao(exp, negLocal);
                 exp.remove(0);
+
             } else {
                 this.variavel(exp, negLocal);
             }
@@ -173,19 +164,19 @@ public class Arvore {
     }
 
     public boolean isNegacao() {
-        return negacao;
+        return this.negacao;
     }
 
     public String getInfo() {
-        return info;
+        return this.info;
     }
 
     public Arvore getDir() {
-        return dir;
+        return this.dir;
     }
 
     public Arvore getEsq() {
-        return esq;
+        return this.esq;
     }
 
     public void imprime() {
@@ -200,21 +191,21 @@ public class Arvore {
     }
 
     public void percorrerInOrder() {
-        System.out.print(this.toString());
-//        if (this.info == null) {
-//            return;
-//        }
-//
-//        if (this.esq != null) {
-//            this.esq.percorrerInOrder();
-//        }
-//        if (this.negacao) {
-//            System.out.print("~");
-//        }
-//        System.out.print(this.info);
-//        if (this.dir != null) {
-//            this.dir.percorrerInOrder();
-//        }
+        //System.out.print(this.toString());
+        if (this.info == null) {
+            return;
+        }
+
+        if (this.esq != null) {
+            this.esq.percorrerInOrder();
+        }
+        if (this.negacao) {
+            System.out.print("~");
+        }
+        System.out.print(this.info);
+        if (this.dir != null) {
+            this.dir.percorrerInOrder();
+        }
     }
 
     public void percorrerPreOrder() {
@@ -255,24 +246,29 @@ public class Arvore {
 
     private String getEXP() {
         String exp = "";
-//        if (this.info == null) {
-//            return null;
-//        }
-        if (ehOper(this.info)) {
-            exp = " (";
-        }
         if (this.negacao) {
             exp = exp + " ~ ";
+            //System.out.println("~");
         }
+//        if (this.info == null) {
+//            return null;
+//        }else{
+//            System.out.println(this.info);
+//        }
+
+        if (ehOper(this.info)) {
+            exp = exp + " (";
+        }
+
         if (this.esq != null) {
             exp = exp + this.esq.getEXP();
         }
-        exp = exp + this.info+" ";
+        exp = exp + this.info + " ";
         if (this.dir != null) {
             exp = exp + this.dir.getEXP();
         }
         if (ehOper(this.info)) {
-            exp = exp+ ") ";
+            exp = exp + ") ";
         }
         return exp;
 

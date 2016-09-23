@@ -91,8 +91,13 @@ public class GeradorDeEquivalencia {
         if (("^".equals(orig.getInfo()) || "v".equals(orig.getInfo())) // se raiz da arvore é AND ou OR
                 && !orig.getDir().equals(orig.getEsq())) { // e ela nao é espelhada
             Arvore nova = new Arvore(orig);
-            nova.setDir(orig.getEsq());//realiza a comutação invertendo os filhos de lado
-            nova.setEsq(orig.getDir());
+            if (orig.getEsq() != null) {
+                nova.setDir(orig.getEsq());//realiza a comutação invertendo os filhos de lado
+            }
+            if (orig.getDir() != null) {
+                nova.setEsq(orig.getDir());//realiza a comutação invertendo os filhos de lado
+            }
+
             gerar(nova, reg);
         }
 
