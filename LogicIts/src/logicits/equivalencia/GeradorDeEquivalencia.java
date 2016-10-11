@@ -198,7 +198,8 @@ public class GeradorDeEquivalencia {
     }
 
     private void assocAND(Arvore orig, Regra reg) {
-        if ("^".equals(orig.getDir().getProposicao()) // dir tambem
+        if ("^".equals(orig.getDir().getProposicao())// dir tambem
+                && !orig.getDir().isNegacao()
                 && !orig.getEsq().raizEhOper()) {      // esq é variavel
             Arvore nova = new Arvore(orig.getDir());
             Arvore aux = new Arvore(orig);               // aplica rotação 
@@ -206,6 +207,7 @@ public class GeradorDeEquivalencia {
             nova.setEsq(aux);
             gerar(nova, reg);
         } else if ("^".equals(orig.getEsq().getProposicao()) // esq tambem
+                && !orig.getEsq().isNegacao()
                 && !orig.getDir().raizEhOper()) {       // dir é variavel
             Arvore nova = new Arvore(orig.getEsq());
             Arvore aux = new Arvore(orig);               // aplica rotação 
@@ -217,6 +219,7 @@ public class GeradorDeEquivalencia {
 
     private void assocOR(Arvore orig, Regra reg) {
         if ("v".equals(orig.getDir().getProposicao())
+                && !orig.getDir().isNegacao()
                 && !orig.getEsq().raizEhOper()) {
             Arvore nova = new Arvore(orig.getDir());
             Arvore aux = new Arvore(orig);               // aplica rotação 
@@ -224,6 +227,7 @@ public class GeradorDeEquivalencia {
             nova.setEsq(aux);
             gerar(nova, reg);
         } else if ("v".equals(orig.getEsq().getProposicao())
+                && !orig.getEsq().isNegacao()
                 && !orig.getDir().raizEhOper()) {
             Arvore nova = new Arvore(orig.getEsq());
             Arvore aux = new Arvore(orig);               // aplica rotação 
@@ -234,8 +238,9 @@ public class GeradorDeEquivalencia {
     }
 
     private void distAND(Arvore orig, Regra reg) {
-        
+
         if ("v".equals(orig.getDir().getProposicao()) // dir OR
+                && !orig.getDir().isNegacao()
                 && !orig.getEsq().raizEhOper()) {      // esq é variavel
             Arvore nova = new Arvore(orig);
             nova.setProposicao("v");
@@ -247,6 +252,7 @@ public class GeradorDeEquivalencia {
             gerar(nova, reg);
 
         } else if ("v".equals(orig.getEsq().getProposicao()) // esq OR
+                && !orig.getEsq().isNegacao()
                 && !orig.getDir().raizEhOper()) {       // dir é variavel
             Arvore nova = new Arvore(orig);
             nova.setProposicao("v");
@@ -259,7 +265,9 @@ public class GeradorDeEquivalencia {
         }
 
         if ("v".equals(orig.getDir().getProposicao()) // dir OR
-                && "v".equals(orig.getEsq().getProposicao())) {      // esq é OR
+                && "v".equals(orig.getEsq().getProposicao())
+                && !orig.getEsq().isNegacao()
+                && !orig.getDir().isNegacao()) {      // esq é OR
             if (orig.getDir().getDir().equals(orig.getEsq().getDir())) {//DIR.DIR = ESQ.DIR
                 Arvore nova = new Arvore(orig);
                 nova.setProposicao("v");
@@ -295,6 +303,7 @@ public class GeradorDeEquivalencia {
 
     private void distOR(Arvore orig, Regra reg) {
         if ("^".equals(orig.getDir().getProposicao())
+                && !orig.getDir().isNegacao()
                 && !orig.getEsq().raizEhOper()) {
             Arvore nova = new Arvore(orig);
             nova.setProposicao("^");
@@ -305,6 +314,7 @@ public class GeradorDeEquivalencia {
             nova.getDir().setEsq(orig.getEsq());
             gerar(nova, reg);
         } else if ("^".equals(orig.getEsq().getProposicao())
+                && !orig.getEsq().isNegacao()
                 && !orig.getDir().raizEhOper()) {
             Arvore nova = new Arvore(orig);
             nova.setProposicao("^");
@@ -317,7 +327,9 @@ public class GeradorDeEquivalencia {
         }
 
         if ("^".equals(orig.getDir().getProposicao()) // dir AND
-                && "^".equals(orig.getEsq().getProposicao())) {      // esq é AND
+                && "^".equals(orig.getEsq().getProposicao())
+                && !orig.getEsq().isNegacao()
+                && !orig.getDir().isNegacao()) {      // esq é AND
             if (orig.getDir().getDir().equals(orig.getEsq().getDir())) {//DIR.DIR = ESQ.DIR
                 Arvore nova = new Arvore(orig);
                 nova.setProposicao("^");
@@ -396,5 +408,15 @@ public class GeradorDeEquivalencia {
         nova2.setDir(nova2Dir);
         gerar(nova2, reg);
     }
+
+    public boolean gerou(String esperado) {
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getArvoreEqui().toString().equals(esperado)) {                
+                return true;
+            }
+        }        
+        return false;
+    }
+   
 
 }

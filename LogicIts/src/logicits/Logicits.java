@@ -16,7 +16,7 @@ import logicits.javaccList.Sintatico;
  */
 public class Logicits {
     public static void main(String[] args) {
-        //Sintatico s = new Sintatico("~(~~p)");
+        Sintatico s = new Sintatico("~(~~p)");
         //Sintatico s = new Sintatico("(p ^ q)");
         //Sintatico s = new Sintatico("p ^ p");
         //Sintatico s = new Sintatico("p v q");
@@ -24,12 +24,12 @@ public class Logicits {
         //Sintatico s = new Sintatico("p v q");
         //Sintatico s = new Sintatico("q v p");
         
-        //Sintatico s = new Sintatico("p ^ ~(q ^ r)");  // Não aplicar assoc se tiver negaçõa fora de parenteses
+        //Sintatico s = new Sintatico("p v ~(q ^ r)");  // Não aplicar assoc se tiver negaçõa fora de parenteses
         //Sintatico s = new Sintatico("p v (q v r)");
         //Sintatico s = new Sintatico("(p ^ q) ^ r");
         //Sintatico s = new Sintatico("(p v q )v r");
         
-        //Sintatico s = new Sintatico("p ^ ~(q v r)");  // Não aplicar dist se tiver negação fora de parenteses
+        //Sintatico s = new Sintatico("(p v q) ^ ~(q v r)");  // Não aplicar dist se tiver negação fora de parenteses
         //Sintatico s = new Sintatico("p ^ (q v r)");
         //Sintatico s = new Sintatico("(p v r) ^ ~(p v q)"); 
         //Sintatico s = new Sintatico("~p");
@@ -69,7 +69,7 @@ public class Logicits {
         //Sintatico s = new Sintatico("~( (p v q) ^ (r v s) )");
         //Sintatico s = new Sintatico("~( (p ^ q) v (r v s) )");
         //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )"); // ~(p ^ q ) v  (r v s ) 
-        Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )"); // ~(r v s ) ->  ~ (p ^ q )
+        //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )"); // ~(r v s ) ->  ~ (p ^ q )
 
         
 

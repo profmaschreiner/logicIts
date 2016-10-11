@@ -24,7 +24,7 @@ public class Sintatico {
 //        Sintatico sint = new Sintatico("p <-> q");
 //
 //    }
-    public Sintatico(String s) {
+    public Sintatico(String s) {        
         try {
             s = s.replace("&", "^");
             s = s.replace("|", "v");
@@ -34,6 +34,7 @@ public class Sintatico {
             StringReader stringReader = new StringReader(s);
             LogicoLexico analizador = new LogicoLexico(stringReader);
             this.lista = analizador.program();
+            
 
         } catch (ParseException e) {
             this.lista.clear();
@@ -43,5 +44,7 @@ public class Sintatico {
             System.out.println("Erro na analize!!!");
         }
     }
+    
+    
 
 }
