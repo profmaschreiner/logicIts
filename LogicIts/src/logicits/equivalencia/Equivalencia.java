@@ -48,7 +48,7 @@ public class Equivalencia {
     public String toString() {
         String equivalencia = "Expressão original " + this.arvoreOriginal
                 + " Expressão equivalente " + this.arvoreEqui
-                + " Através da regra " + this.regra;
+                + " Através da regra " + new ListaRegras().getRegra(this.regra);
 
         return equivalencia; //To change body of generated methods, choose Tools | Templates.
     }

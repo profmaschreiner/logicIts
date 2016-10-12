@@ -24,9 +24,5 @@ public enum Regra {
     CP,
     EI;
     
-    List<String> lista = new ArrayList<>();
-    
-    
-    
     
 }
