@@ -65,6 +65,15 @@ public class GeradorDeEquivalencia {
         ei();
     }
 
+    public boolean gerou(String esperado) {
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getArvoreEqui().toString().equals(esperado)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void id() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.ID;                                  //define a regra a ser utilizada por este metodo
@@ -132,6 +141,24 @@ public class GeradorDeEquivalencia {
             if ("v".equals(orig.getProposicao())) {
                 dmConj(orig, reg);
             }
+        } else if ("v".equals(orig.getProposicao())) {
+            if (orig.getDir().isNegacao() && orig.getEsq().isNegacao()) {
+                Arvore nova = new Arvore(orig);
+                nova.setProposicao("^");
+                nova.negarArvore();
+                nova.getEsq().negarArvore();
+                nova.getDir().negarArvore();
+                gerar(nova, reg);
+            }
+        } else if ("^".equals(orig.getProposicao())) {
+            if (orig.getDir().isNegacao() && orig.getEsq().isNegacao()) {
+                Arvore nova = new Arvore(orig);
+                nova.setProposicao("v");
+                nova.negarArvore();
+                nova.getEsq().negarArvore();
+                nova.getDir().negarArvore();
+                gerar(nova, reg);
+            }
         }
 
     }
@@ -144,7 +171,10 @@ public class GeradorDeEquivalencia {
             nova.setProposicao("v");
             nova.getEsq().negarArvore();
             gerar(nova, reg);
+        } else if ("v".equals(orig.getProposicao()) && !orig.getDir().equals(orig.getEsq())) {
+            condDisj(orig, reg);
         }
+
     }
 
     private void bicond() {
@@ -153,7 +183,10 @@ public class GeradorDeEquivalencia {
         if ("<->".equals(orig.getProposicao())) {
             bicondImplica(orig, reg);
             bicondDisjun(orig, reg);
+        } else if (!orig.isNegacao() && !orig.getDir().isNegacao() && !orig.getEsq().isNegacao()) {
+            bicondRetorno(orig, reg);
         }
+
     }
 
     private void cp() {
@@ -409,14 +442,46 @@ public class GeradorDeEquivalencia {
         gerar(nova2, reg);
     }
 
-    public boolean gerou(String esperado) {
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getArvoreEqui().toString().equals(esperado)) {                
-                return true;
-            }
-        }        
-        return false;
+    private void condDisj(Arvore orig, Regra reg) {
+        Arvore nova1 = new Arvore(orig);
+        Arvore nova2 = new Arvore(orig);
+        nova2.setDir(orig.getEsq());
+        nova2.setEsq(orig.getDir());
+        nova1.setProposicao("->");
+        nova2.setProposicao("->");
+        nova1.getEsq().negarArvore();
+        nova2.getEsq().negarArvore();
+        gerar(nova1, reg);
+        gerar(nova2, reg);
     }
-   
+
+    private void bicondRetorno(Arvore orig, Regra reg) {
+        if ("^".equals(orig.getProposicao())
+                && "->".equals(orig.getDir().getProposicao())
+                && "->".equals(orig.getEsq().getProposicao())
+                && orig.getDir().getEsq().equals(orig.getEsq().getDir())
+                && orig.getEsq().getEsq().equals(orig.getDir().getDir())) {
+            novaBicond(orig, reg);
+        } else if ("v".equals(orig.getProposicao())
+                && "^".equals(orig.getDir().getProposicao())
+                && "^".equals(orig.getEsq().getProposicao())) {
+            Arvore auxDir = new Arvore(orig.getDir());
+            Arvore auxEsq = new Arvore(orig.getEsq());
+            auxDir.getEsq().negarArvore();
+            auxDir.getDir().negarArvore();
+            if ((auxDir.equals(auxEsq))
+                    || (auxDir.getDir().equals(auxEsq.getEsq())
+                    && auxDir.getEsq().equals(auxEsq.getDir()))) {
+                novaBicond(orig, reg);
+            }
+        }
+
+    }
+
+    private void novaBicond(Arvore orig, Regra reg) {
+        Arvore nova = new Arvore(orig.getEsq());
+        nova.setProposicao("<->");
+        gerar(nova, reg);
+    }
 
 }

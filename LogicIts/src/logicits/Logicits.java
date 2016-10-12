@@ -16,7 +16,7 @@ import logicits.javaccList.Sintatico;
  */
 public class Logicits {
     public static void main(String[] args) {
-        Sintatico s = new Sintatico("~(~~p)");
+        //Sintatico s = new Sintatico("~(~~p)");
         //Sintatico s = new Sintatico("(p ^ q)");
         //Sintatico s = new Sintatico("p ^ p");
         //Sintatico s = new Sintatico("p v q");
@@ -24,12 +24,12 @@ public class Logicits {
         //Sintatico s = new Sintatico("p v q");
         //Sintatico s = new Sintatico("q v p");
         
-        //Sintatico s = new Sintatico("p v ~(q ^ r)");  // Não aplicar assoc se tiver negaçõa fora de parenteses
+        //Sintatico s = new Sintatico("p v ~(q ^ r)"); 
         //Sintatico s = new Sintatico("p v (q v r)");
         //Sintatico s = new Sintatico("(p ^ q) ^ r");
         //Sintatico s = new Sintatico("(p v q )v r");
         
-        //Sintatico s = new Sintatico("(p v q) ^ ~(q v r)");  // Não aplicar dist se tiver negação fora de parenteses
+        //Sintatico s = new Sintatico("(p v q) ^ ~(q v r)");
         //Sintatico s = new Sintatico("p ^ (q v r)");
         //Sintatico s = new Sintatico("(p v r) ^ ~(p v q)"); 
         //Sintatico s = new Sintatico("~p");
@@ -41,8 +41,7 @@ public class Logicits {
         //Sintatico s = new Sintatico("~p v q");
         //Sintatico s = new Sintatico("p <-> q");
         //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");
-        //Sintatico s = new Sintatico("(p ^ q) v (~p ^ ~q)");  // ID apenas para filhos iguais 
-                                                              //verificar negações junto com proposição nas equivalencias
+        //Sintatico s = new Sintatico("(p ^ q) v (~p ^ ~q)");  
         //Sintatico s = new Sintatico("~q -> ~p");
         //Sintatico s = new Sintatico("((p ^ q) -> r)");
         //Sintatico s = new Sintatico("p -> (q -> r)");
@@ -73,7 +72,16 @@ public class Logicits {
 
         
 
-      
+        
+        
+        //Sintatico s = new Sintatico("~(~p ^ ~q)");//conferir dm desta regra
+        //Sintatico s = new Sintatico("(~p v ~q)"); //dm = ~(p ^ q)
+        //Sintatico s = new Sintatico("(~p v q)"); // cond = (p -> q) e (~q -> ~p)
+        Sintatico s = new Sintatico("(p ^ q) v (q ^ p)");// cond errado ~(p ^ q) -> (q ^ p)
+        
+        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");  // bicond = (p <-> q)  // gera varias regras (conferir todas)
+        //Sintatico s = new Sintatico("(p ^ q) v (~q ^ ~p)");  // bicond = (p <-> q)
+        
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
                 Object next = token.next();

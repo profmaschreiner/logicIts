@@ -19,8 +19,8 @@ public class GeradorDeEquivalenciaTeste {
     @Test
     public void teste() {
         exe("~(~~p)","( ~ p ^ ~ p)"); 
-        exe("(p ^ q)","  ");
-        exe("p ^ p","  ");
+        exe("(p ^ q)"," p");
+        exe("p ^ p"," q");
         exe("p v q","  ");
         exe("q ^ p","  ");
         exe("p v q","  ");
