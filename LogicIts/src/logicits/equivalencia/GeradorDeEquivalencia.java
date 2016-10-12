@@ -183,7 +183,11 @@ public class GeradorDeEquivalencia {
         if ("<->".equals(orig.getProposicao())) {
             bicondImplica(orig, reg);
             bicondDisjun(orig, reg);
-        } else if (!orig.isNegacao() && !orig.getDir().isNegacao() && !orig.getEsq().isNegacao()) {
+        } else if (!orig.isNegacao()
+                && orig.getDir() != null
+                && orig.getEsq() != null
+                && !orig.getDir().isNegacao() 
+                && !orig.getEsq().isNegacao()) {
             bicondRetorno(orig, reg);
         }
 
@@ -205,16 +209,20 @@ public class GeradorDeEquivalencia {
     private void ei() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.EI;
-        if ("^".equals(orig.getProposicao()) && "->".equals(orig.getDir().getProposicao())) {
-            Arvore nova = new Arvore(orig);
+        if ("->".equals(orig.getProposicao()) && "^".equals(orig.getEsq().getProposicao())) {
+            Arvore nova = new Arvore(orig.getEsq());
+            Arvore aux = new Arvore(orig);               // aplica rotação 
+            aux.setEsq(nova.getDir());                   // a direita (igual AVL)
+            nova.setDir(aux);
             nova.setProposicao("->");
             gerar(nova, reg);
         }
-        if ("^".equals(orig.getProposicao()) && "->".equals(orig.getEsq().getProposicao())) {
-            Arvore nova = new Arvore(orig);
-            nova.setProposicao("->");
-            nova.setDir(orig.getEsq());
-            nova.setEsq(orig.getDir());
+        if ("->".equals(orig.getProposicao()) && "->".equals(orig.getDir().getProposicao())) {
+            Arvore nova = new Arvore(orig.getDir());
+            Arvore aux = new Arvore(orig);               // aplica rotação 
+            aux.setDir(nova.getEsq());                   // a esquerda (igual AVL)
+            nova.setEsq(aux);
+            nova.getEsq().setProposicao("^");
             gerar(nova, reg);
         }
     }
@@ -461,7 +469,7 @@ public class GeradorDeEquivalencia {
                 && "->".equals(orig.getEsq().getProposicao())
                 && orig.getDir().getEsq().equals(orig.getEsq().getDir())
                 && orig.getEsq().getEsq().equals(orig.getDir().getDir())) {
-            novaBicond(orig, reg);
+            geraBicond(orig, reg);
         } else if ("v".equals(orig.getProposicao())
                 && "^".equals(orig.getDir().getProposicao())
                 && "^".equals(orig.getEsq().getProposicao())) {
@@ -469,16 +477,14 @@ public class GeradorDeEquivalencia {
             Arvore auxEsq = new Arvore(orig.getEsq());
             auxDir.getEsq().negarArvore();
             auxDir.getDir().negarArvore();
-            if ((auxDir.equals(auxEsq))
-                    || (auxDir.getDir().equals(auxEsq.getEsq())
-                    && auxDir.getEsq().equals(auxEsq.getDir()))) {
-                novaBicond(orig, reg);
+            if (auxDir.equals(auxEsq)) {
+                geraBicond(orig, reg);
             }
         }
 
     }
 
-    private void novaBicond(Arvore orig, Regra reg) {
+    private void geraBicond(Arvore orig, Regra reg) {
         Arvore nova = new Arvore(orig.getEsq());
         nova.setProposicao("<->");
         gerar(nova, reg);

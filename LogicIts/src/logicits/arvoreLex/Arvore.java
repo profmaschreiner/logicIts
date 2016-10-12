@@ -74,7 +74,10 @@ public class Arvore implements Cloneable {
 
     public boolean equals(Arvore a) {
         if (this.getProposicao().equals(a.getProposicao()) && this.isNegacao() == a.isNegacao()) {
-            if (this.getDir() == null && a.getDir() == null) {
+            if ("^".equals(a.getProposicao()) || "v".equals(a.getProposicao()) || "<->".equals(a.getProposicao())) {
+                return (a.getDir().equals(this.getDir()) && a.getEsq().equals(this.getEsq()))
+                        || (a.getDir().equals(this.getEsq()) && a.getEsq().equals(this.getDir()));
+            } else if (this.getDir() == null && a.getDir() == null) {
                 if (this.getEsq() == null && a.getEsq() == null) {
                     return true;
                 }
@@ -263,7 +266,7 @@ public class Arvore implements Cloneable {
         if (this.esq != null) {
             exp = exp + this.esq.getEXP();
         }
-        exp = exp + " "+this.proposicao;
+        exp = exp + " " + this.proposicao;
         if (this.dir != null) {
             exp = exp + this.dir.getEXP();
         }

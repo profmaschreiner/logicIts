@@ -16,71 +16,62 @@ import logicits.javaccList.Sintatico;
  */
 public class Logicits {
     public static void main(String[] args) {
-        //Sintatico s = new Sintatico("~(~~p)");
-        //Sintatico s = new Sintatico("(p ^ q)");
-        //Sintatico s = new Sintatico("p ^ p");
-        //Sintatico s = new Sintatico("p v q");
-        //Sintatico s = new Sintatico("q ^ p");
-        //Sintatico s = new Sintatico("p v q");
-        //Sintatico s = new Sintatico("q v p");
-        
-        //Sintatico s = new Sintatico("p v ~(q ^ r)"); 
-        //Sintatico s = new Sintatico("p v (q v r)");
-        //Sintatico s = new Sintatico("(p ^ q) ^ r");
-        //Sintatico s = new Sintatico("(p v q )v r");
-        
-        //Sintatico s = new Sintatico("(p v q) ^ ~(q v r)");
-        //Sintatico s = new Sintatico("p ^ (q v r)");
-        //Sintatico s = new Sintatico("(p v r) ^ ~(p v q)"); 
-        //Sintatico s = new Sintatico("~p");
-        //Sintatico s = new Sintatico("~(p ^ q)");
-        //Sintatico s = new Sintatico("~p v ~q");
-        //Sintatico s = new Sintatico("~(p v q)");
-        //Sintatico s = new Sintatico("~p ^ ~q");
-        //Sintatico s = new Sintatico("p -> q");
-        //Sintatico s = new Sintatico("~p v q");
-        //Sintatico s = new Sintatico("p <-> q");
-        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");
-        //Sintatico s = new Sintatico("(p ^ q) v (~p ^ ~q)");  
-        //Sintatico s = new Sintatico("~q -> ~p");
-        //Sintatico s = new Sintatico("((p ^ q) -> r)");
-        //Sintatico s = new Sintatico("p -> (q -> r)");
-        //Sintatico s = new Sintatico("~(~~(~p))");
-        
-               
-        //Sintatico s = new Sintatico("~(p ^ q)");// dm ¬p ∨ ¬q 
-        //Sintatico s = new Sintatico("~(p v q)");// dm ¬p ∧ ¬q
-        //Sintatico s = new Sintatico("p -> q ");// cond ¬p ∨ q
-        //Sintatico s = new Sintatico("p <-> q ");// bicond (p → q) ∧ (q → p) E (p ∧ q) ∨ (¬p ∧ ¬q)        
-        //Sintatico s = new Sintatico("p -> q ");// cp ¬p -> ¬q
-        //Sintatico s = new Sintatico("(q -> r)^p");// ei p → (q → r)
+        //Sintatico s = new Sintatico("~(~~p)");                //id
+        //Sintatico s = new Sintatico("p ^ p");                 //id 
+        //Sintatico s = new Sintatico("~p");                    //id
+        //Sintatico s = new Sintatico("~(~~(~p))");             //id 
+        //Sintatico s = new Sintatico("(p ^ q)");               //com
+        //Sintatico s = new Sintatico("q ^ p");                 //com
+        //Sintatico s = new Sintatico("(p v q) ^ ~(q v r)");    //com
+        //Sintatico s = new Sintatico("(p v r) ^ ~(p v q)");    //com
+        //Sintatico s = new Sintatico("(q -> r) ^ p");          //com ------------- ei p → (q → r)--não precisa pois já é vdd
+        //Sintatico s = new Sintatico("(p ^ q) ^ r");           //com assoc 
+        //Sintatico s = new Sintatico("(p v q )v r");           //com assoc cond
+        //Sintatico s = new Sintatico("p v (q v r)");           //com assoc cond 
+        //Sintatico s = new Sintatico("p ^ (q v r)");           //com dist
+        //Sintatico s = new Sintatico("~p v q");                //com cond 
+        //Sintatico s = new Sintatico("p v ~(q ^ r)");          //com cond
+        //Sintatico s = new Sintatico("p v q");                 //com cond 
+        //Sintatico s = new Sintatico("~(p v q)");              //com cond dm-------dm ¬p ∧ ¬q
+        //Sintatico s = new Sintatico("~p v ~q");               //com cond dm
+        //Sintatico s = new Sintatico("~(p v q)");              //com cond dm
+        //Sintatico s = new Sintatico("(p ^ q) v (~p ^ ~q)");   //com cond bicond
+        //Sintatico s = new Sintatico("~(p ^ q)");              //com dm
+        //Sintatico s = new Sintatico("~p ^ ~q");               //com dm
+        //Sintatico s = new Sintatico("~(p ^ q)");              //com dm------------dm ¬p ∨ ¬q
+        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");   //com bicond
+        //Sintatico s = new Sintatico("~q -> ~p");              //cond cp        
+        //Sintatico s = new Sintatico("p -> q ");               //cond cp-----------cp ¬p -> ¬q----cond ¬p ∨ q
+        //Sintatico s = new Sintatico("((p ^ q) -> r)");        //cond cp ei
+        //Sintatico s = new Sintatico("p -> (q -> r)");         //cond cp ei
+        //Sintatico s = new Sintatico("p -> q ");               //cond cp---------- cond ¬p ∨ q
+        //Sintatico s = new Sintatico("p <-> q ");              //bicond----------- (p → q) ∧ (q → p) E (p ∧ q) ∨ (¬p ∧ ¬q)
         /**
          * Prof. Marcos
          * 
          */
+         
+        //Sintatico s = new Sintatico("(p ^ q) v (q ^ p)");     //id dist 
+        //Sintatico s = new Sintatico("(p v q) ^ (r ^ s ^ t)"); //com 
+        //Sintatico s = new Sintatico("(p v q) ^ (r v s)");     //com  
+        //Sintatico s = new Sintatico("(p v q) ^ (r v s v t)"); //com
+        //Sintatico s = new Sintatico("~(~p ^ ~q)");            //com    ---------------conferir "dm" desta regra 
+        //Sintatico s = new Sintatico("(p ^ q) v (r ^ s ^ t)"); //com cond
+        //Sintatico s = new Sintatico("(p v q) v (r ^ s ^ t)"); //com cond 
+        //Sintatico s = new Sintatico("(p ^ q) v (r ^ s v t)"); //com cond
+        //Sintatico s = new Sintatico("(~p v q)");              //com cond
+        //Sintatico s = new Sintatico("(p -> q) v (q -> p)");   //com cond
+        //Sintatico s = new Sintatico("(p ^ q) v (~q ^ ~p)");   //com cond bicond 
+        //Sintatico s = new Sintatico("~( (p v q) ^ (r v s) )");//com dm 
+        //Sintatico s = new Sintatico("~( (p ^ q) v (r v s) )");//com dm cond
+        //Sintatico s = new Sintatico("(~p v ~q)");             //com dm cond
+        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");   //com bicond
+        //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )");//cond cp ei
+        //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )");//cond cp ei
+        //Sintatico s = new Sintatico("( (p ^ q) -> r)");       //cond cp ei
+        Sintatico s = new Sintatico("( r -> (p -> q))");      //cond cp ei  
         
-        //Sintatico s = new Sintatico("(p v q) ^ (r v s)");
-        //Sintatico s = new Sintatico("(p v q) ^ (r v s v t)");
-        //Sintatico s = new Sintatico("(p ^ q) v (r ^ s ^ t)");
-        //Sintatico s = new Sintatico("(p v q) v (r ^ s ^ t)");
-        //Sintatico s = new Sintatico("(p ^ q) v (r ^ s v t)");
-        //Sintatico s = new Sintatico("(p v q) ^ (r ^ s ^ t)"); 
-        //Sintatico s = new Sintatico("~( (p v q) ^ (r v s) )");
-        //Sintatico s = new Sintatico("~( (p ^ q) v (r v s) )");
-        //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )"); // ~(p ^ q ) v  (r v s ) 
-        //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )"); // ~(r v s ) ->  ~ (p ^ q )
-
         
-
-        
-        
-        //Sintatico s = new Sintatico("~(~p ^ ~q)");//conferir dm desta regra
-        //Sintatico s = new Sintatico("(~p v ~q)"); //dm = ~(p ^ q)
-        //Sintatico s = new Sintatico("(~p v q)"); // cond = (p -> q) e (~q -> ~p)
-        Sintatico s = new Sintatico("(p ^ q) v (q ^ p)");// cond errado ~(p ^ q) -> (q ^ p)
-        
-        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");  // bicond = (p <-> q)  // gera varias regras (conferir todas)
-        //Sintatico s = new Sintatico("(p ^ q) v (~q ^ ~p)");  // bicond = (p <-> q)
         
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
