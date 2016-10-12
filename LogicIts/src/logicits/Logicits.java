@@ -7,14 +7,21 @@ package logicits;
 
 import logicits.arvoreLex.Arvore;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import logicits.equivalencia.Equivalencia;
 import logicits.equivalencia.GeradorDeEquivalencia;
 import logicits.javaccList.Sintatico;
+import logicits.momentos.Calculadora;
+import logicits.momentos.Expressoes;
+import logicits.momentos.RegraLogica;
 
 /**
  *
  * @author fabio
  */
 public class Logicits {
+
     public static void main(String[] args) {
         //Sintatico s = new Sintatico("~(~~p)");                //id
         //Sintatico s = new Sintatico("p ^ p");                 //id 
@@ -48,9 +55,9 @@ public class Logicits {
         //Sintatico s = new Sintatico("p <-> q ");              //bicond----------- (p → q) ∧ (q → p) E (p ∧ q) ∨ (¬p ∧ ¬q)
         /**
          * Prof. Marcos
-         * 
+         *
          */
-         
+
         //Sintatico s = new Sintatico("(p ^ q) v (q ^ p)");     //id dist 
         //Sintatico s = new Sintatico("(p v q) ^ (r ^ s ^ t)"); //com 
         //Sintatico s = new Sintatico("(p v q) ^ (r v s)");     //com  
@@ -69,28 +76,38 @@ public class Logicits {
         //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )");//cond cp ei
         //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )");//cond cp ei
         //Sintatico s = new Sintatico("( (p ^ q) -> r)");       //cond cp ei
-        Sintatico s = new Sintatico("( r -> (p -> q))");      //cond cp ei  
+        //Sintatico s = new Sintatico("( r -> (p -> q))");      //cond cp ei  
+
+//        if (!"Erro".equals(s.lista.get(0))) {
+//            for (Iterator token = s.lista.iterator(); token.hasNext();) {
+//                Object next = token.next();
+//                System.out.println(next.toString());
+//            }
+//
+//            Arvore a = new Arvore(s.lista, false);
+//            a.imprime();
+//
+//            System.out.println("");
+//
+//            GeradorDeEquivalencia ge = new GeradorDeEquivalencia(s.lista, a);
+//
+//            ge.getLista().stream().forEach((equivalencia) -> {
+//                equivalencia.imprime();
+//            });
+//        }
+
+
+//        Calculadora c = new Calculadora("~( (p ^ q) v (r v s) )");
+//        System.out.println(c);
+
+        Random rand = new Random();
+        Expressoes dados = new Expressoes();
+        List<String> l = dados.getExp();
+        String exp = l.get(rand.nextInt(l.size()));
         
+        RegraLogica r = new RegraLogica(exp);
         
-        
-        if (!"Erro".equals(s.lista.get(0))) {
-            for (Iterator token = s.lista.iterator(); token.hasNext();) {
-                Object next = token.next();
-                System.out.println(next.toString());
-            }
-        
-        
-        Arvore a = new Arvore(s.lista,false);        
-        a.imprime();
-        
-        System.out.println("");        
-        
-        GeradorDeEquivalencia ge = new GeradorDeEquivalencia(s.lista, a);       
-        
-        ge.getLista().stream().forEach((equivalencia) -> {
-            equivalencia.imprime();
-        });
-        }
-        
+        System.out.println(r);
+
     }
 }

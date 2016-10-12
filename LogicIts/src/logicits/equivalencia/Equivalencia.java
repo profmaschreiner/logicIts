@@ -46,8 +46,16 @@ public class Equivalencia {
 
     @Override
     public String toString() {
-        String equivalencia = "Expressão original -> " + this.arvoreOriginal
-                + " = Equivalência da regra " + this.regra + "-> " + this.arvoreEqui;
+        String equivalencia = "Expressão original " + this.arvoreOriginal
+                + " Expressão equivalente " + this.arvoreEqui
+                + " Através da regra " + this.regra;
+
+        return equivalencia; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public String toStringRegra() {
+        String equivalencia = "Expressão original " + this.arvoreOriginal
+                + " Expressão equivalente " + this.arvoreEqui;
 
         return equivalencia; //To change body of generated methods, choose Tools | Templates.
     }

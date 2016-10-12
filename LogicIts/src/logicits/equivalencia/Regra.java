@@ -5,6 +5,9 @@
  */
 package logicits.equivalencia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author fabio
@@ -20,4 +23,10 @@ public enum Regra {
     BICOND,
     CP,
     EI;
+    
+    List<String> lista = new ArrayList<>();
+    
+    
+    
+    
 }
