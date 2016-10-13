@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import logicits.arvoreLex.Arvore;
-import logicits.equivalencia.Equivalencia;
-import logicits.equivalencia.GeradorDeEquivalencia;
-import logicits.equivalencia.ListaRegras;
-import logicits.javaccList.Sintatico;
+import logicits.javacclist.Sintatico;
 import logicits.momentos.DigitaEquivalencia;
 import logicits.momentos.Expressoes;
 

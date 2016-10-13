@@ -8,6 +8,7 @@ package logicits.equivalencia;
 import java.util.ArrayList;
 import java.util.List;
 import logicits.arvoreLex.Arvore;
+import logicits.javacclist.Sintatico;
 
 /**
  *
@@ -66,8 +67,10 @@ public class GeradorDeEquivalencia {
     }
 
     public boolean gerou(String esperado) {
+        Sintatico s = new Sintatico(esperado);
+        Arvore a = new Arvore(s.lista, false);
         for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getArvoreEqui().toString().equals(esperado)) {
+            if (lista.get(i).getArvoreEqui().toString().equals(a.toString())) {
                 return true;
             }
         }

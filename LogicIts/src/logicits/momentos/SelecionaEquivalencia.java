@@ -10,7 +10,7 @@ import java.util.List;
 import logicits.arvoreLex.Arvore;
 import logicits.equivalencia.Equivalencia;
 import logicits.equivalencia.GeradorDeEquivalencia;
-import logicits.javaccList.Sintatico;
+import logicits.javacclist.Sintatico;
 
 /**
  *

@@ -6,7 +6,7 @@
 package logicits.equivalencia;
 
 import logicits.arvoreLex.Arvore;
-import logicits.javaccList.Sintatico;
+import logicits.javacclist.Sintatico;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -19,55 +19,55 @@ public class GeradorDeEquivalenciaTeste {
     @Test
     public void teste() {
         exe("~(~~p)","( ~ p ^ ~ p)"); 
-        exe("(p ^ q)"," p");
-        exe("p ^ p"," q");
-        exe("p v q","  ");
-        exe("q ^ p","  ");
-        exe("p v q","  ");
-        exe("q v p","  ");
+        exe("(p ^ p)","p");
+        exe("p ^ q","q ^ p");
+        exe("p v q","q v p");
+        exe("q ^ p","p ^ q");
+        exe("p v q","~q -> p");
+        exe("q v p","~p -> q");
 
-        exe("p v ~(q ^ r)","  ");  // Não aplicar assoc se tiver negaçõa fora de parenteses
-        exe("p v (q v r)","  ");
-        exe("(p ^ q) ^ r","  ");
-        exe("(p v q )v r","  ");
-        exe("(p v q) ^ ~(q v r)","  ");  // Não aplicar dist se tiver negação fora de parenteses
-        exe("p ^ (q v r)","  ");
-        exe("(p v r) ^ ~(p v q)","  "); 
-        exe("~p","  ");
-        exe("~(p ^ q)","  ");
-        exe("~p v ~q","  ");
-        exe("~(p v q)","  ");
-        exe("~p ^ ~q","  ");
-        exe("p -> q","  ");
-        exe("~p v q","  ");
-        exe("p <-> q","  ");
-        exe("(p -> q) ^ (q -> p)","  ");
-        exe("(p ^ q) v (~p ^ ~q)","  ");  // ID apenas para filhos iguais 
-        //verificar negações junto com proposição nas equivalencias
-        exe("~q -> ~p","  ");
-        exe("((p ^ q) -> r)","  ");
-        exe("p -> (q -> r)","  ");
-        exe("~(~~(~p))","  ");
-        exe("~(p ^ q)","  ");// dm ¬p ∨ ¬q 
-        exe("~(p v q)","  ");// dm ¬p ∧ ¬q
-        exe("p -> q ","  ");// cond ¬p ∨ q
-        exe("p <-> q ","  ");// bicond (p → q) ∧ (q → p) E (p ∧ q) ∨ (¬p ∧ ¬q)        
-        exe("p -> q ","  ");// cp ¬p -> ¬q
-        exe("(q -> r)^p","  ");// ei p → (q → r)
+        exe("p v ~(q ^ r)","(q ^ r) -> p");  
+        exe("p v (q v r)","~(q v r) -> p");
+        exe("(p ^ q) ^ r","p ^ (q ^ r)");
+        exe("(p v q ) v r","p v (q v r)");
+        exe("(p v q) ^ ~(q v r)","~(q v r) ^ (p v q)");
+        exe("p ^ (q v r)","(p ^ q) v (p ^ r)");
+        exe("(p v r) ^ ~(p v q)","~(p v q) ^ (p v r)"); 
+        exe("~p","~p v ~p");
+        exe("~(p ^ q)","~p v ~q");
+        exe("~p v ~q","~(p ^ q)");
+        exe("~(p v q)","~p ^ ~q");
+        exe("~p ^ ~q","~(p v q)");
+        exe("p -> q","~p v q");
+        exe("~p v q","p -> q");
+        exe("p <-> q","(p -> q) ^ (q -> p)");
+        exe("(p -> q) ^ (q -> p)","p <-> q");
+        exe("(p ^ q) v (p ^ ~q)","p ^ (q v ~q)"); 
+        exe("~q -> ~p","p -> q");
+        exe("((p ^ q) -> r)","p -> (q -> r)");
+        exe("p -> (q -> r)","(p ^ q) -> r");
+        exe("~(~~(~p))","p ^ p");
+        exe("~(p ^ q)","~p v ~q");// dm ¬p ∨ ¬q 
+        exe("~(p v q)","~p ^ ~q");// dm ¬p ∧ ¬q
+        exe("p -> q ","~p v q");// cond ¬p ∨ q
+        exe("p <-> q ","(p -> q) ^ (q -> p)");// bicond (p → q) ∧ (q → p) E (p ∧ q) ∨ (¬p ∧ ¬q)        
+        exe("p <-> q ","(p ^ q) v (~p ^ ~q)");
+        exe("p -> q ","~q -> ~p");   // cp ¬p -> ¬q ----- verificar mas acho que esta errado
+        exe("(q -> r) ^ p"," p ^ (q -> r) ");
         /**
          * Prof. Marcos
          *
          */
-        exe("(p v q) ^ (r v s)","  ");
-        exe("(p v q) ^ (r v s v t)","  ");
-        exe("(p ^ q) v (r ^ s ^ t)","  ");
-        exe("(p v q) v (r ^ s ^ t)","  ");
-        exe("(p ^ q) v (r ^ s v t)","  ");
-        exe("(p v q) ^ (r ^ s ^ t)","  "); 
-        exe("~( (p v q) ^ (r v s) )","  ");
-        exe("~( (p ^ q) v (r v s) )","  ");
-        exe("( (p ^ q) -> (r v s) )", "( ~( p ^ q) v( r v s))");
-        exe("( (p ^ q) -> (r v s) )","  "); // ~(r v s ) ->  ~ (p ^ q )
+        exe("(p v q) ^ (r v s)","(r v s) ^ (p v q)");
+        exe("(p v q) ^ (r v s v t)","(r v s v t) ^ (p v q)");
+        exe("(p ^ q) v (r ^ s ^ t)","(r ^ s ^ t) v (p ^ q)");
+        exe("(p v q) v (r ^ s ^ t)","(r ^ s ^ t) v (p v q)");
+        exe("(p ^ q) v (r ^ s v t)","~(p ^ q) -> (r ^ s v t)");
+        exe("(p v q) ^ (r ^ s ^ t)","(r ^ s ^ t) ^ (p v q) "); 
+        exe("~( (p v q) ^ (r v s) )","( ~(p v q) v ~(r v s) )");
+        exe("~( (p ^ q) v (r v s) )","(~(p ^ q) ^ ~(r v s))");
+        exe("( (p ^ q) -> (r v s) )", "(~( p ^ q) v( r v s))");
+        exe("( (p ^ q) -> (r v s) )"," ~(r v s ) ->  ~ (p ^ q )");
 
     }
 

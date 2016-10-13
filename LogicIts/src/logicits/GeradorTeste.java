@@ -8,7 +8,7 @@ package logicits;
 import java.util.Iterator;
 import logicits.arvoreLex.Arvore;
 import logicits.equivalencia.GeradorDeEquivalencia;
-import logicits.javaccList.Sintatico;
+import logicits.javacclist.Sintatico;
 
 /**
  *
@@ -42,10 +42,10 @@ public class GeradorTeste {
         //Sintatico s = new Sintatico("~(p ^ q)");              //com dm------------dm ¬p ∨ ¬q
         //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");   //com bicond
         //Sintatico s = new Sintatico("~q -> ~p");              //cond cp        
-        //Sintatico s = new Sintatico("p -> q ");               //cond cp-----------cp ¬p -> ¬q----cond ¬p ∨ q
+        //Sintatico s = new Sintatico("p -> q ");               //cond cp-----------cp ¬p -> ¬q (não acontece assim) verificar ----cond ¬p ∨ q
         //Sintatico s = new Sintatico("((p ^ q) -> r)");        //cond cp ei
         //Sintatico s = new Sintatico("p -> (q -> r)");         //cond cp ei
-        //Sintatico s = new Sintatico("p -> q ");               //cond cp---------- cond ¬p ∨ q
+        //Sintatico s = new Sintatico("p -> q ");               //cond cp---------- cond ¬p ∨ q  
         //Sintatico s = new Sintatico("p <-> q ");              //bicond----------- (p → q) ∧ (q → p) E (p ∧ q) ∨ (¬p ∧ ¬q)
         /**
          * Prof. Marcos

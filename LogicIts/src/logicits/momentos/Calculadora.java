@@ -8,7 +8,7 @@ package logicits.momentos;
 import java.util.Iterator;
 import logicits.arvoreLex.Arvore;
 import logicits.equivalencia.GeradorDeEquivalencia;
-import logicits.javaccList.Sintatico;
+import logicits.javacclist.Sintatico;
 
 /**
  *
