@@ -13,9 +13,10 @@ package logicits;
 public class Logicits {
 
     public static void main(String[] args) {
-        //new GeradorTeste();     //configuração interna
-        //new CalculadoraTeste(); //digitar expressão no terminal
-        //new RegraLogicaTeste(); //digitar numero daregra no terminal
-        new SelecionaEquivalenciaTeste();
+        //new GeradorTeste();                 //configuração interna
+        //new CalculadoraTeste();             //digitar expressão no terminal
+        //new RegraLogicaTeste();             //digitar numero da regra no terminal
+        //new SelecionaEquivalenciaTeste();   //digitar numeros das expressoes (separando por ,) no terminal
+        new DigitaEquivalenciaTeste();
     }
 }

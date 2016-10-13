@@ -7,7 +7,6 @@ package logicits.momentos;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import logicits.arvoreLex.Arvore;
 import logicits.equivalencia.Equivalencia;
 import logicits.equivalencia.GeradorDeEquivalencia;
@@ -18,7 +17,7 @@ import logicits.javaccList.Sintatico;
  * @author fabio
  */
 public class SelecionaEquivalencia {
-    private String questao = "Dada a expressão lógicaa seguir: \n";
+    private String questao = "Dada a expressão lógica a seguir: \n";
     List<Equivalencia> listaEq;
 
     public SelecionaEquivalencia(String expr) {
@@ -26,7 +25,7 @@ public class SelecionaEquivalencia {
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
                 Object next = token.next();
-                System.out.println(next.toString());
+                //System.out.println(next.toString());
             }
 
             Arvore a = new Arvore(s.lista, false);

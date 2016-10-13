@@ -27,7 +27,7 @@ public class RegraLogica {
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
                 Object next = token.next();
-                System.out.println(next.toString());
+                //System.out.println(next.toString());
             }
 
             Arvore a = new Arvore(s.lista, false);

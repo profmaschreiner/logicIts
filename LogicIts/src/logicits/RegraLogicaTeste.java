@@ -25,21 +25,24 @@ public class RegraLogicaTeste {
         String exp = l.get(rand.nextInt(l.size()));
         ListaRegras lr = new ListaRegras();
 
-        RegraLogica r = new RegraLogica(exp);
+        RegraLogica questao = new RegraLogica(exp);
         System.out.println("\n");
         System.out.println("\n");
         System.out.println("\n");
-        System.out.println(r);
+        System.out.println(questao);        
         for (int i = 0; i < lr.getLista().size(); i++) {
             System.out.println(i + " - " + lr.getLista().get(i));
         }
         System.out.println("\n");
         Scanner sc = new Scanner(System.in);
-        int num1 = sc.nextInt();
-        if (lr.getLista().get(num1).equals(lr.getRegra(r.getReg()))) {
+        int resUsr = sc.nextInt();
+        
+        
+        if (lr.getLista().get(resUsr).equals(lr.getRegra(questao.getReg()))) {
             System.out.println("\n\nResposta correta");
         } else {
-            System.out.println("\n\nResposta errada");
+            System.out.println("\n\nResposta errada, a regra aplicada foi "+lr.getRegra(questao.getReg()));
+            
         }
     }
 

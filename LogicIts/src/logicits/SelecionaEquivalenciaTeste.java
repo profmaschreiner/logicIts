@@ -26,28 +26,24 @@ public class SelecionaEquivalenciaTeste {
         String exp = l.get(rand.nextInt(l.size()));
         String[] opcoes = new String[10];
         SelecionaEquivalencia s = new SelecionaEquivalencia(exp);
-        List<Integer> respostas = new ArrayList<>();
+        List<Integer> listaRespostas = new ArrayList<>();
         List<Integer> numeros = new ArrayList<>();
-        for (int i = 0; i < 10; i++) { 
+        for (int i = 0; i < 10; i++) {
             numeros.add(i);
         }
         //Embaralhamos os números:
         Collections.shuffle(numeros);
         //Mostramos os primeiros aleatórios
         for (int i = 0; i < s.getListaEq().size(); i++) {
-            respostas.add(numeros.get(i));
-            opcoes[numeros.get(i)] = s.getListaEq().get(i).toStringEqui();
+            listaRespostas.add(numeros.get(i));
+            opcoes[numeros.get(i)] = numeros.get(i)+" - "+s.getListaEq().get(i).toStringEqui();
         }
-        
-        
-        
+
         for (int i = 0; i < 10; i++) {
-            if (opcoes[i]==null) {
-                opcoes[i]="errado";
+            if (opcoes[i] == null) {
+                opcoes[i] = i+" - "+"errado"; //colocar uma expressão aqui
             }
         }
-       
-        
 
         System.out.println("\n");
         System.out.println("\n");
@@ -59,18 +55,46 @@ public class SelecionaEquivalenciaTeste {
         System.out.println("\n");
         Scanner sc = new Scanner(System.in);
         String respostaDoUsuario = sc.nextLine();
-        String[] listRespDoUsuario = respostaDoUsuario.split(",");
-        List<Integer> listResInt = new ArrayList<>();
-        for (int i = 0; i < listRespDoUsuario.length; i++) {
-            listResInt.add(Integer.parseInt(listRespDoUsuario[i]));
+        String[] entradaUsuario = respostaDoUsuario.split(",");
+        List<Integer> listRespostaUsuario = new ArrayList<>();
+        for (int i = 0; i < entradaUsuario.length; i++) {
+            listRespostaUsuario.add(Integer.parseInt(entradaUsuario[i]));
         }
-        
-//        if (listResInt.size() == respostas.size()) {
-//            System.out.println("\n\nResposta correta");
-//        } else {
-//            System.out.println("\n\nResposta errada");
-//        }
+        List<Integer> acertos = new ArrayList<>();
+        List<Integer> faltas = new ArrayList<>();
+        List<Integer> sobras = new ArrayList<>();
+        for (Integer resUsr : listRespostaUsuario) {
+            if (listaRespostas.contains(resUsr)) {
+                acertos.add(resUsr);
+            } else {
+                sobras.add(resUsr);
+            }
+        }
+        for (Integer res : listaRespostas) {
+            if (!listRespostaUsuario.contains(res)) {
+                faltas.add(res);
+            }
+        }
 
+        if (acertos.isEmpty()) {
+            System.out.println("Resposta errada, você não selecionou nenhuma expressão correta!");
+        } else if (faltas.isEmpty() && sobras.isEmpty()) {
+            System.out.println("Resposta correta, você acertou todas!");
+        } else {
+            System.out.println("Sua resposta NÃO está completamente certa!");
+            for (int i = 0; i < faltas.size(); i++) {
+                System.out.println(faltas.get(i) + " - " + s.getListaEq().get(numeros.indexOf(faltas.get(i))) + " TAMBÉM é equivalente!");
+            }
+            for (int i = 0; i < sobras.size(); i++) {
+                System.out.println(opcoes[sobras.get(i)] + " NÃO é equivalente!");
+            }
+        }
+        if (!acertos.isEmpty()) {
+            System.out.println("As seguintes expressões foram selecionadas corretamente:");
+            for (Integer acert : acertos) {
+                System.out.println(acert+" - "+s.getListaEq().get(numeros.indexOf(acert)));
+            }
+        }
     }
 
 }
