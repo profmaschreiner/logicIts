@@ -11,18 +11,17 @@ import java.util.Random;
 import logicits.arvoreLex.Arvore;
 import logicits.equivalencia.Equivalencia;
 import logicits.equivalencia.GeradorDeEquivalencia;
-import logicits.equivalencia.Regra;
 import logicits.javaccList.Sintatico;
 
 /**
  *
  * @author fabio
  */
-public class RegraLogica {
-    private String questao = "Dada as seguintes expressões lógicas: \n";
-    private Regra  reg = null;
+public class SelecionaEquivalencia {
+    private String questao = "Dada a expressão lógicaa seguir: \n";
+    List<Equivalencia> listaEq;
 
-    public RegraLogica(String expr) {
+    public SelecionaEquivalencia(String expr) {
         Sintatico s = new Sintatico(expr);
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
@@ -33,15 +32,11 @@ public class RegraLogica {
             Arvore a = new Arvore(s.lista, false);
 
             GeradorDeEquivalencia gerador = new GeradorDeEquivalencia(s.lista, a);
-            List<Equivalencia> l = gerador.getEquivalencias();
+            listaEq = gerador.getEquivalencias();                        
             
-            Random rand = new Random();
-            Equivalencia eq = l.get(rand.nextInt(l.size()));            
+            this.questao = this.questao + a.toString();
+            this.questao = this.questao + "\nSelecione todas as expressões equivalentes:";
             
-            this.questao = this.questao + eq.toStringSemRegra();
-            this.questao = this.questao + "\nSelecione a REGRA que foi aplicada:";
-            
-            this.reg = eq.getRegra();        
         } else {
             this.questao = "";
             for (int i = 0; i < s.lista.size(); i++) {
@@ -56,9 +51,13 @@ public class RegraLogica {
         return questao;
     }
 
-
-    public Regra getReg() {
-        return reg;
+    public List<Equivalencia> getListaEq() {
+        return listaEq;
     }
+
+    
+    
+    
+    
     
 }

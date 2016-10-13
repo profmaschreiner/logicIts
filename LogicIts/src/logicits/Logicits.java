@@ -13,8 +13,9 @@ package logicits;
 public class Logicits {
 
     public static void main(String[] args) {
-        //new GeradorTeste();
-        //new CalculadoraTeste();
-        new RegraLogicaTeste();
+        //new GeradorTeste();     //configuração interna
+        //new CalculadoraTeste(); //digitar expressão no terminal
+        //new RegraLogicaTeste(); //digitar numero daregra no terminal
+        new SelecionaEquivalenciaTeste();
     }
 }

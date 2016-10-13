@@ -53,12 +53,18 @@ public class Equivalencia {
         return equivalencia; //To change body of generated methods, choose Tools | Templates.
     }
     
-    public String toStringRegra() {
+    public String toStringSemRegra() {
         String equivalencia = "Expressão original " + this.arvoreOriginal
                 + " Expressão equivalente " + this.arvoreEqui;
 
         return equivalencia; //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public String toStringEqui() {
+        return this.arvoreEqui.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
     public void imprime() {
         System.out.println(this.toString());
