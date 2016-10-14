@@ -22,7 +22,7 @@ import logicits.javacclist.Sintatico;
 public class DigitaEquivalencia {
 
     private String questao = "Dada a seguinte expressão lógica: \n";
-    private Arvore resposta = null;
+    private List<Equivalencia> resposta = new ArrayList<>();
     private List<Equivalencia> outrasEquivalencias = new ArrayList<>();
 
     public DigitaEquivalencia(String expr) {
@@ -41,8 +41,13 @@ public class DigitaEquivalencia {
             Random rand = new Random();
             Equivalencia eq = l.get(rand.nextInt(l.size()));
             this.outrasEquivalencias.remove(eq);
+            this.resposta.add(eq);
             this.questao = this.questao + "\nAplique a regra " + new ListaRegras().getRegra(eq.getRegra()) + " \ne digite a expressão equivalente\n";
-            this.resposta = eq.getArvoreEqui();
+            for (int i = 0; i < l.size(); i++) {
+                if (eq.getRegra().equals(l.get(i).getRegra())) {
+                    this.resposta.add(l.get(i));
+                }
+            }        
 
         } else {
             this.questao = "";
@@ -52,7 +57,7 @@ public class DigitaEquivalencia {
         }
     }
 
-    public Arvore getResposta() {
+    public List<Equivalencia> getResposta() {
         return resposta;
     }
 

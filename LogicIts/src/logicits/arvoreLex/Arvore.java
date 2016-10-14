@@ -72,9 +72,34 @@ public class Arvore implements Cloneable {
         this.proposicao = proposicao;
     }
 
+    //arvores com rais = ^ v <-> podem ser invertidas
     public boolean equals(Arvore a) {
         if (this.getProposicao().equals(a.getProposicao()) && this.isNegacao() == a.isNegacao()) {
             if ("^".equals(a.getProposicao()) || "v".equals(a.getProposicao()) || "<->".equals(a.getProposicao())) {
+                return (a.getDir().equals(this.getDir()) && a.getEsq().equals(this.getEsq()))
+                        || (a.getDir().equals(this.getEsq()) && a.getEsq().equals(this.getDir()));
+            } else if (this.getDir() == null && a.getDir() == null) {
+                if (this.getEsq() == null && a.getEsq() == null) {
+                    return true;
+                }
+                if (this.getEsq() == null || a.getEsq() == null) {
+                    return false;
+                }
+                return this.getEsq().equals(a.getEsq());
+            }
+            if (this.getDir() == null || a.getDir() == null) {
+                return false;
+            }
+            return this.getDir().equals(a.getDir());
+
+        }
+        return false;
+    }
+    
+    //não deixa que arvores invertidas serem iguais
+    public boolean equalsRestrito(Arvore a) {
+        if (this.getProposicao().equals(a.getProposicao()) && this.isNegacao() == a.isNegacao()) {
+            if ("<->".equals(a.getProposicao())) {
                 return (a.getDir().equals(this.getDir()) && a.getEsq().equals(this.getEsq()))
                         || (a.getDir().equals(this.getEsq()) && a.getEsq().equals(this.getDir()));
             } else if (this.getDir() == null && a.getDir() == null) {

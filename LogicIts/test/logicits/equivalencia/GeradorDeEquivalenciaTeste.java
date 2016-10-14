@@ -54,6 +54,10 @@ public class GeradorDeEquivalenciaTeste {
         exe("p <-> q ","(p ^ q) v (~p ^ ~q)");
         exe("p -> q ","~q -> ~p");   // cp ¬p -> ¬q ----- verificar mas acho que esta errado
         exe("(q -> r) ^ p"," p ^ (q -> r) ");
+        exe("(r v t) v q", "~(r v t) -> q");
+        exe("(r v t) v q", "~q -> (r v t)");
+        exe("p v (r v t)", "~(r v t) -> p");
+        exe("p v (r ^ t)", "~p -> (r ^ t)");
         /**
          * Prof. Marcos
          *
