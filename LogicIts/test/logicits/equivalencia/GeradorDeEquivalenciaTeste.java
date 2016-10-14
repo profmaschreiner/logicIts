@@ -18,13 +18,15 @@ public class GeradorDeEquivalenciaTeste {
 
     @Test
     public void teste() {
-        exe("~(~~p)","( ~ p ^ ~ p)"); 
+        exe("~(~~p)","( ~ p ^ ~ p)");
+        exe("~(~~p)","( ~ p v ~ p)");
         exe("(p ^ p)","p");
         exe("p ^ q","q ^ p");
         exe("p v q","q v p");
         exe("q ^ p","p ^ q");
         exe("p v q","~q -> p");
         exe("q v p","~p -> q");
+        exe("p ^ q -> r", "p -> (q -> r)");    // verificar precedencia dos operadores
 
         exe("p v ~(q ^ r)","(q ^ r) -> p");  
         exe("p v (q v r)","~(q v r) -> p");
@@ -73,6 +75,8 @@ public class GeradorDeEquivalenciaTeste {
         exe("( (p ^ q) -> (r v s) )", "(~( p ^ q) v( r v s))");
         exe("( (p ^ q) -> (r v s) )"," ~(r v s ) ->  ~ (p ^ q )");
 
+        exe("(p v q)", "(p v q) ^ (p v q)"); // id de qualquer expr esta falhando
+        
     }
 
     private boolean exe(String inicial, String esperada) {

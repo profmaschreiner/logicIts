@@ -79,6 +79,12 @@ public class QuestaoSelecionaEquivalencia {
 
         if (acertos.isEmpty()) {
             retorno="Resposta errada, você não selecionou nenhuma expressão correta!";
+            for (int i = 0; i < faltas.size(); i++) {
+                retorno = retorno+"\n"+faltas.get(i) 
+                        + " - " 
+                        + s.getListaEq().get(numeros.indexOf(faltas.get(i))) 
+                        + " é equivalente!";
+            }
         } else if (faltas.isEmpty() && sobras.isEmpty()) {
             retorno = retorno+"\nResposta correta, você acertou todas!";
         } else {
