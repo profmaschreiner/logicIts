@@ -17,6 +17,7 @@ import logicits.javacclist.Sintatico;
 public class GeradorTeste {
 
     public GeradorTeste() {
+        //Sintatico s = new Sintatico("");
         //Sintatico s = new Sintatico("~(~~p)");                //id
         //Sintatico s = new Sintatico("p ^ p");                 //id 
         //Sintatico s = new Sintatico("~p");                    //id
@@ -40,7 +41,7 @@ public class GeradorTeste {
         //Sintatico s = new Sintatico("~(p ^ q)");              //com dm
         //Sintatico s = new Sintatico("~p ^ ~q");               //com dm
         //Sintatico s = new Sintatico("~(p ^ q)");              //com dm------------dm ¬p ∨ ¬q
-        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");   //com bicond
+        Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");   //com bicond
         //Sintatico s = new Sintatico("~q -> ~p");              //cond cp        
         //Sintatico s = new Sintatico("p -> q ");               //cond cp---------cond ¬p ∨ q
         //Sintatico s = new Sintatico("((p ^ q) -> r)");        //cond cp ei
@@ -55,7 +56,7 @@ public class GeradorTeste {
         //Sintatico s = new Sintatico("(p ^ q) v (q ^ p)");     //id dist 
         //Sintatico s = new Sintatico("(p v q) ^ (r ^ s ^ t)"); //com 
         //Sintatico s = new Sintatico("(p v q) ^ (r v s)");     //com  
-        Sintatico s = new Sintatico("(p v q) ^ (r v s v t)"); //com
+        //Sintatico s = new Sintatico("(p v q) ^ (r v s v t)"); //com
         //Sintatico s = new Sintatico("~(~p ^ ~q)");            //com dm 
         //Sintatico s = new Sintatico("(p ^ q) v (r ^ s ^ t)"); //com cond
         //Sintatico s = new Sintatico("(p v q) v (r ^ s ^ t)"); //com cond 
@@ -71,6 +72,7 @@ public class GeradorTeste {
         //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )");//cond cp ei
         //Sintatico s = new Sintatico("( (p ^ q) -> r)");       //cond cp ei
         //Sintatico s = new Sintatico("( r -> (p -> q))");      //cond cp ei  
+        //Sintatico s = new Sintatico("p -> q <-> r");
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {
                 Object next = token.next();

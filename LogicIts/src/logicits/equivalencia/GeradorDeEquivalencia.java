@@ -80,13 +80,12 @@ public class GeradorDeEquivalencia {
     private void id() {
         Arvore orig = GeradorDeEquivalencia.arvoreOriginal;
         Regra reg = Regra.ID;                                  //define a regra a ser utilizada por este metodo
-        if (!orig.raizEhOper()) {//se a raiz é uma variavel
-            idConjDisj(orig, reg);
-        } else if (("^".equals(orig.getProposicao()) || "v".equals(orig.getProposicao()))//se raiz AND ou OR
+        if (("^".equals(orig.getProposicao()) || "v".equals(orig.getProposicao()))//se raiz AND ou OR
                 && orig.getDir().equals(orig.getEsq())) {                    // e DIR = ESQ
             Arvore nova = new Arvore(orig.getEsq()); //gera equivalencia SIMPLIFICADA
             gerar(nova, reg);
         }
+        idConjDisj(orig, reg);
 
     }
 
@@ -217,7 +216,7 @@ public class GeradorDeEquivalencia {
             Arvore aux = new Arvore(orig);               // aplica rotação 
             aux.setEsq(nova.getDir());                   // a direita (igual AVL)
             nova.setDir(aux);
-            nova.setProposicao("->");
+            nova.setProposicao("->");                   //troca operador
             gerar(nova, reg);
         }
         if ("->".equals(orig.getProposicao()) && "->".equals(orig.getDir().getProposicao())) {
@@ -225,7 +224,7 @@ public class GeradorDeEquivalencia {
             Arvore aux = new Arvore(orig);               // aplica rotação 
             aux.setDir(nova.getEsq());                   // a esquerda (igual AVL)
             nova.setEsq(aux);
-            nova.getEsq().setProposicao("^");
+            nova.getEsq().setProposicao("^");         //troca operador
             gerar(nova, reg);
         }
     }
@@ -454,16 +453,10 @@ public class GeradorDeEquivalencia {
     }
 
     private void condDisj(Arvore orig, Regra reg) {
-        Arvore nova1 = new Arvore(orig);
-        Arvore nova2 = new Arvore(orig);
-        nova2.setDir(orig.getEsq());
-        nova2.setEsq(orig.getDir());
-        nova1.setProposicao("->");
-        nova2.setProposicao("->");
-        nova1.getEsq().negarArvore();
-        nova2.getEsq().negarArvore();
-        gerar(nova1, reg);
-        gerar(nova2, reg);
+        Arvore nova = new Arvore(orig);
+        nova.setProposicao("->");
+        nova.getEsq().negarArvore();
+        gerar(nova, reg);
     }
 
     private void bicondRetorno(Arvore orig, Regra reg) {

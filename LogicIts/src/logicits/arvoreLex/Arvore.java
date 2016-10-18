@@ -6,6 +6,7 @@
 package logicits.arvoreLex;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +23,16 @@ public class Arvore implements Cloneable {
 
     public Arvore(List<String> exp, boolean negacao) {
         this.negacao = negacao;
-        this.insere(exp);
+        //this.insere(exp);        
+        Arvore a = new Arvore(biimplicacao(exp, negacao));
+        if (a.getDir() != null) {
+            this.setDir(a.getDir());
+        }
+        if (a.getEsq() != null) {
+            this.setEsq(a.getEsq());
+        }
+        this.setProposicao(a.getProposicao());
+        this.negacao = a.isNegacao();
     }
 
     public Arvore(String info, boolean negacao) {
@@ -45,6 +55,9 @@ public class Arvore implements Cloneable {
             Logger.getLogger(Arvore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private Arvore() {
     }
 
     @Override
@@ -95,7 +108,7 @@ public class Arvore implements Cloneable {
         }
         return false;
     }
-    
+
     //não deixa que arvores invertidas serem iguais
     public boolean equalsRestrito(Arvore a) {
         if (this.getProposicao().equals(a.getProposicao()) && this.isNegacao() == a.isNegacao()) {
@@ -120,48 +133,78 @@ public class Arvore implements Cloneable {
         return false;
     }
 
-    private void insere(List<String> exp) {
-        expressao(exp, false);
-    }
-
-    private void expressao(List<String> exp, boolean negacao) {
-        this.termo(exp, false);
-        if (exp.size() > 0 && ehOper(exp.get(0))) {
-            this.esq = new Arvore(this);
-            this.negacao = negacao;
-            this.proposicao = exp.get(0);
+    private Arvore biimplicacao(List<String> exp, boolean negacao) {
+        Arvore a = implicacao(exp, negacao);
+        if (exp.size() > 0 && "<->".equals(exp.get(0))) {
+            Arvore aux = new Arvore(exp.get(0), negacao);
+            aux.setEsq(new Arvore(a));
             exp.remove(0);
-            dir = new Arvore(exp, false);
-        } else if (negacao) {
-            this.negacao = !this.negacao;
+            aux.setDir(new Arvore(biimplicacao(exp, false)));
+            return aux;
         }
+        return a;
     }
 
-    private void termo(List<String> exp, boolean negacao) {
+    private Arvore implicacao(List<String> exp, boolean negacao) {
+        Arvore a = disjuncao(exp, negacao);
+        if (exp.size() > 0 && "->".equals(exp.get(0))) {
+            Arvore aux = new Arvore(exp.get(0), negacao);
+            aux.setEsq(new Arvore(a));
+            exp.remove(0);
+            aux.setDir(new Arvore(implicacao(exp, false)));
+            return aux;
+        }
+        return a;
+    }
+
+    private Arvore disjuncao(List<String> exp, boolean negacao) {
+        Arvore a = conjuncao(exp, negacao);
+        if (exp.size() > 0 && "v".equals(exp.get(0))) {
+            Arvore aux = new Arvore(exp.get(0), negacao);
+            aux.setEsq(new Arvore(a));
+            exp.remove(0);
+            aux.setDir(new Arvore(disjuncao(exp, false)));
+            return aux;
+        }
+        return a;
+    }
+
+    private Arvore conjuncao(List<String> exp, boolean negacao) {
+        Arvore a = termo(exp, negacao);
+        if (exp.size() > 0 && "^".equals(exp.get(0))) {
+            Arvore aux = new Arvore(exp.get(0), negacao);
+            aux.setEsq(new Arvore(a));
+            exp.remove(0);
+            aux.setDir(new Arvore(conjuncao(exp, false)));
+            return aux;
+        }
+        return a;
+    }
+
+    private Arvore termo(List<String> exp, boolean negacao) {
         boolean negLocal = negacao;
-        if (exp.size() > 0) {
-            if (exp.get(0).contains("~")) {
-                if (ehNegacao(exp.get(0))) {
-                    negLocal = !negLocal;
-                }
-                exp.remove(exp.get(0));
+        if (exp.get(0).contains("~")) {
+            if (ehNegacao(exp.get(0))) {
+                negLocal = !negLocal;
             }
-            if ("(".equals(exp.get(0))) {
-
-                exp.remove(0);
-                this.expressao(exp, negLocal);
-                exp.remove(0);
-
-            } else {
-                this.variavel(exp, negLocal);
-            }
+            exp.remove(exp.get(0));
         }
+        if ("(".equals(exp.get(0))) {
+            exp.remove(0);
+            Arvore a = new Arvore(biimplicacao(exp, false));
+            if (negLocal) {
+                a.negarArvore();
+            }
+            exp.remove(0);
+            return a;
+        }
+        return variavel(exp, negLocal);
     }
 
-    private void variavel(List<String> exp, boolean negacao) {
-        this.negacao = negacao;
-        this.proposicao = exp.get(0);
+    private Arvore variavel(List<String> exp, boolean negacao) {
+        Arvore a = new Arvore(exp.get(0), negacao);
         exp.remove(0);
+        return a;
     }
 
     private boolean ehOper(String token) {

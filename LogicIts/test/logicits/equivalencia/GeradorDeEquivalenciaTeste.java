@@ -24,12 +24,10 @@ public class GeradorDeEquivalenciaTeste {
         exe("p ^ q","q ^ p");
         exe("p v q","q v p");
         exe("q ^ p","p ^ q");
-        exe("p v q","~q -> p");
-        exe("q v p","~p -> q");
         exe("p ^ q -> r", "p -> (q -> r)");    // verificar precedencia dos operadores
 
-        exe("p v ~(q ^ r)","(q ^ r) -> p");  
-        exe("p v (q v r)","~(q v r) -> p");
+        
+        exe("(q v r) v p","~(q v r) -> p");
         exe("(p ^ q) ^ r","p ^ (q ^ r)");
         exe("(p v q ) v r","p v (q v r)");
         exe("(p v q) ^ ~(q v r)","~(q v r) ^ (p v q)");
@@ -57,8 +55,8 @@ public class GeradorDeEquivalenciaTeste {
         exe("p -> q ","~q -> ~p");   // cp ¬p -> ¬q ----- verificar mas acho que esta errado
         exe("(q -> r) ^ p"," p ^ (q -> r) ");
         exe("(r v t) v q", "~(r v t) -> q");
-        exe("(r v t) v q", "~q -> (r v t)");
-        exe("p v (r v t)", "~(r v t) -> p");
+        exe("q v (r v t)", "~q -> (r v t)");
+        exe("~p v ~(r v t)", "p -> ~(r v t) ");
         exe("p v (r ^ t)", "~p -> (r ^ t)");
         /**
          * Prof. Marcos
