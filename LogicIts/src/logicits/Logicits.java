@@ -27,22 +27,22 @@ public class Logicits {
         List<String> l = dados.getExp();
         String exp = l.get(rand.nextInt(l.size()));
         
-        new GeradorTeste();                 //configuração interna
+        //new GeradorTeste();                 //configuração interna
         
         //CalculadoraLogica qc = new CalculadoraLogica(exp);             //digitar expressão no terminal  
-        //QuestaoRegraLogica qr = new QuestaoRegraLogica(exp);//digitar numero da regra no terminal
+        QuestaoRegraLogica qr = new QuestaoRegraLogica(exp);//digitar numero da regra no terminal
         //QuestaoSelecionaEquivalencia qs = new QuestaoSelecionaEquivalencia(exp);//digitar numeros das expressoes (separando por ,) no terminal
-//        QuestaoDigitaEquivalencia qd = new QuestaoDigitaEquivalencia(exp);
-//        System.out.println("");
-//        System.out.println("");
-//        System.out.println("");
-//        System.out.println("");
-//        System.out.println(qd);
-//        
-//        Scanner sc = new Scanner(System.in);
-//        String expEq = sc.nextLine();
-//        
-//        String res = qd.resposta(expEq);
-//        System.out.println(res);
+        //QuestaoDigitaEquivalencia qd = new QuestaoDigitaEquivalencia(exp);
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println(qr);
+        
+        Scanner sc = new Scanner(System.in);
+        String expEq = sc.nextLine();
+        
+        String res = qr.resposta(expEq);
+        System.out.println(res);
     }
 }

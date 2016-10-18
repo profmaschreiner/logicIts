@@ -41,7 +41,7 @@ public class GeradorTeste {
         //Sintatico s = new Sintatico("~(p ^ q)");              //com dm
         //Sintatico s = new Sintatico("~p ^ ~q");               //com dm
         //Sintatico s = new Sintatico("~(p ^ q)");              //com dm------------dm ¬p ∨ ¬q
-        Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");   //com bicond
+        //Sintatico s = new Sintatico("(p -> q) ^ (q -> p)");   //com bicond
         //Sintatico s = new Sintatico("~q -> ~p");              //cond cp        
         //Sintatico s = new Sintatico("p -> q ");               //cond cp---------cond ¬p ∨ q
         //Sintatico s = new Sintatico("((p ^ q) -> r)");        //cond cp ei
@@ -71,7 +71,7 @@ public class GeradorTeste {
         //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )");//cond cp ei
         //Sintatico s = new Sintatico("( (p ^ q) -> (r v s) )");//cond cp ei
         //Sintatico s = new Sintatico("( (p ^ q) -> r)");       //cond cp ei
-        //Sintatico s = new Sintatico("( r -> (p -> q))");      //cond cp ei  
+        Sintatico s = new Sintatico("( r -> (p -> q))");      //cond cp ei  
         //Sintatico s = new Sintatico("p -> q <-> r");
         if (!"Erro".equals(s.lista.get(0))) {
             for (Iterator token = s.lista.iterator(); token.hasNext();) {

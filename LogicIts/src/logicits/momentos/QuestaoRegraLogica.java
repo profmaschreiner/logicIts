@@ -8,6 +8,7 @@ package logicits.momentos;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import logicits.equivalencia.Equivalencia;
 import logicits.equivalencia.ListaRegras;
 
 /**
@@ -33,15 +34,25 @@ public class QuestaoRegraLogica {
         return this.questao;
     }
 
-    
     public String resposta(String resUsrSTR) {
         String retorno = "";
         int resUsr = Integer.parseInt(resUsrSTR);
         if (lr.getLista().get(resUsr).equals(lr.getRegra(this.questaoOBJ.getReg()))) {
-            retorno = "\n\nResposta correta";
+            retorno = "\n\nSua Resposta está correta";
         } else {
-            retorno = "\n\nResposta errada, a regra aplicada foi " + lr.getRegra(questaoOBJ.getReg());
-
+            retorno = "\n\nResposta errada, a regra aplicada foi " 
+                    + lr.getRegra(questaoOBJ.getReg());
+            
+        }
+        List<Equivalencia> l = this.questaoOBJ.getEquivalencias();
+        for (int i = 0; i < l.size(); i++) {
+            if (lr.getLista().get(resUsr).equals(lr.getRegra(l.get(i).getRegra()))) {
+                retorno = retorno 
+                        + "\nAo aplicar " 
+                        + lr.getRegra(l.get(i).getRegra()) 
+                        + " temos " 
+                        + l.get(i).getArvoreEqui();
+            }
         }
         return retorno;
     }

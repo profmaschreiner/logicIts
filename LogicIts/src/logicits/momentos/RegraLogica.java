@@ -21,6 +21,7 @@ import logicits.javacclist.Sintatico;
 public class RegraLogica {
     private String questao = "Dada as seguintes expressões lógicas: \n";
     private Regra  reg = null;
+    private List<Equivalencia> equivalencias;
 
     public RegraLogica(String expr) {
         Sintatico s = new Sintatico(expr);
@@ -34,7 +35,7 @@ public class RegraLogica {
 
             GeradorDeEquivalencia gerador = new GeradorDeEquivalencia(s.lista, a);
             List<Equivalencia> l = gerador.getEquivalencias();
-            
+            this.equivalencias = l;
             Random rand = new Random();
             Equivalencia eq = l.get(rand.nextInt(l.size()));            
             
@@ -56,7 +57,11 @@ public class RegraLogica {
         return questao;
     }
 
+    public List<Equivalencia> getEquivalencias() {
+        return equivalencias;
+    }
 
+    
     public Regra getReg() {
         return reg;
     }
